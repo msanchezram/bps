@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style.css">  
+
+</head>
+<body  class="body1" onload="carga()">
+<header>
+  <h3><a href="./index.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>&nbsp;B - P - S</h3>
+</header>
+
+<br>
+<div>
+    <label for="fteam">Equipo</label>
+    <input type="text" id="fteam" name="team" placeholder="equipo de la jugadora...">
+ 
+    <label for="fname">Nombre de la jugadora</label>
+    <input type="text" id="fname" name="nombre" placeholder="nombre de la jugadora...">
+
+    <label for="lcategoria">Categoria y nivel</label>
+    <input type="text" id="lcategoria" name="categoria" placeholder="categoria y nivel el equipo..">
+
+    <label for="lname">Fecha</label>
+    <input type="text" id="lfecha" name="fecha" placeholder="dd/mm/aaaa..">
+
+    <label for="lrival">Nombre del rival</label>
+    <input type="text" id="lrival" name="rival" placeholder="nombre del rival..">
+  
+    <label for="lcomplejidad">Complejidad del rival</label>
+    <select id="complejidad" name="lcomplejidad">
+      <option value="1">Somos mucho mejores</option>
+      <option value="2">Somos mejores pero por poco</option>
+      <option value="3">Será un partido competitivo</option>
+      <option value="4">Somos peores pero por poco </option>
+      <option value="5">Nos van a dar una paliza</option>
+    </select>
+
+    
+    <!--
+    <label for="lpartes">Cuantas partes tiene el partido</label>
+    <select id="partes" name="lpartes">
+      <option value="4">4 partes</option>
+      <option value="8">8 partes</option>
+    </select>
+    -->
+    <input id="creapartido" class="bsubmit" type="button" value="Iniciar el partido" onclick="crearPartido()" >
+  
+</div>
+     
+
+<script src="./js/crearpartido.js"></script>
+</body>
+</html>
