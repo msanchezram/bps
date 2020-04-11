@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style.css">  
+
+</head>
+<body onload="cargaCrono()">
+
+<header class="header2">
+  Periodos
+</header>
+<br>
+<table>
+  <tr>
+    <td><button  type="button" onclick="modificaDatosPartido()" >Modificar datos del partido</button></td>
+  </tr>
+</table>
+
+<br>
+<br>
+<table>
+  <tr>
+    <td><button id="1" onclick="buttonSelected(1);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">1</button> </td>
+    <td><button id="2" onclick="buttonSelected(2);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">2</button> </td>
+    <td><button id="3" onclick="buttonSelected(3);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">3</button> </td>
+    <td><button id="4" onclick="buttonSelected(4);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">4</button> </td>
+  </tr>
+
+</table>
+
+<br>
+<br>
+<br>
+<table>
+  <tr>
+  <td><button id="myBtnFin" type="button" onclick="modalFinPartido()" >Fin del partido</button></td>
+</tr>
+</table>
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span> 
+      <p>Estás seguro que quieres acabar el partido?</p> 
+      <table>
+        <tr>
+          <td><button type="button" onclick="finPartido(1)" >Sí</button></td>          
+          <td><button type="button" onclick="cerrarModal()" >No</button></td>
+        </tr>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr><td colspan="2"><button type="button" onclick="finPartido(0)">Sí, pero sin guardar datos</button></td></tr>
+      </table>      
+        
+  </div>
+
+</div>
+<script src="./js/crono.js"></script>
+</body>
+</html>
