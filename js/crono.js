@@ -97,7 +97,7 @@ function generateLineSave(){
   texto+=getDatosAciertosPorPeriodo(2,1)+";";
   texto+=getDatosAciertosPorPeriodo(3,1)+";";
   texto+=getDatosAciertosPorPeriodo(4,1)+";";
-  texto+=getDatosIntentosPorPeriodo(1,1)+";";
+  texto+=getDatosIntentosPorPeriodo(1,1)+";";//pos 10
   texto+=getDatosIntentosPorPeriodo(2,1)+";";
   texto+=getDatosIntentosPorPeriodo(3,1)+";";
   texto+=getDatosIntentosPorPeriodo(4,1)+";";

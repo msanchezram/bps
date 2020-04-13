@@ -54,6 +54,7 @@ function datosPartido(datosLinea){
     //balones recuperados
     printarDatosAccionesPartido('bar',datosLinea,66);
     
+    printarValoraciones(datosLinea);
 }
 
 function printDatosPuntosPartido(tipoTiro,datosLinea,posInicio,factormultiplicador){
@@ -86,4 +87,70 @@ function printarDatosAccionesPartido(accion,datosLinea,posInicio){
     }
     document.getElementById(accion+"-total").innerHTML=total;
 }
-    
+
+function printarValoraciones(datosLinea){
+
+    var valorTotal=0;
+    var valor=0;
+    valor = getValoracion(1, datosLinea);
+    valorTotal+=valor;
+    document.getElementById("val-1").innerHTML=valor;
+    valor = getValoracion(2, datosLinea);
+    valorTotal+=valor;
+    document.getElementById("val-2").innerHTML=valor;
+    valor = getValoracion(3, datosLinea);
+    valorTotal+=valor;
+    document.getElementById("val-3").innerHTML=valor;
+    valor = getValoracion(4, datosLinea);
+    valorTotal+=valor;
+    document.getElementById("val-4").innerHTML=valor;
+
+    document.getElementById("val-total").innerHTML=valorTotal;
+}
+
+function getValoracion(periodo, datosLinea){
+
+    var valor=0;
+    var posInicio=5;
+    posInicio+=periodo;
+    valor=getTotalValoracionPosicion(datosLinea, posInicio);
+    return valor;
+}
+
+function getTotalValoracionPosicion(datosLinea, posInicio){
+// PTS + ASIS + REB + TAPF + BR + FR + T1C + T2C + T3C – BP – TAPC – FP – T1I – T2I – T3I
+    var valor=0;
+    valor+=Number(datosLinea[posInicio])*2; //tiros de 1 + puntos
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //tiros de 1 intentadas
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio])*2+Number(datosLinea[posInicio]); //tiros de 2 + puntos
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //tiros de 2 intentadas
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio])*3+Number(datosLinea[posInicio]); //tiros de 3 + puntos
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //tiros de 3 intentadas
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio])*2+Number(datosLinea[posInicio]); //tiros de entradas + puntos
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //tiros de entradas intentadas
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //faltas realizadas
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //faltas recibidas
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //asistencias
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //tapones
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //rebotes of
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //rebotes def
+    posInicio+=4;
+    valor-=Number(datosLinea[posInicio]); //balones perdidos
+    posInicio+=4;
+    valor+=Number(datosLinea[posInicio]); //balones recuperados
+
+    return valor;
+}
