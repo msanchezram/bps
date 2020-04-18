@@ -8,7 +8,8 @@
 
 </head>
 <body onload="cargaCrono()">
-
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
 <header class="header2">
   Periodos
 </header>
@@ -47,13 +48,13 @@
       <p>Estás seguro que quieres acabar el partido?</p> 
       <table>
         <tr>
-          <td><button type="button" onclick="finPartido(1)" >Sí</button></td>          
+          <td><button type="button" onclick="finPartido(0)" >Sí</button></td>          
           <td><button type="button" onclick="cerrarModal()" >No</button></td>
         </tr>
         <tr>
           <td colspan="2">&nbsp;</td>
         </tr>
-        <tr><td colspan="2"><button type="button" onclick="finPartido(0)">Sí, pero sin guardar datos</button></td></tr>
+        <tr><td colspan="2"><button id="btnsave" type="button" onclick="finPartido(1)">Guardar la información</button></td></tr>
       </table>      
         
   </div>
