@@ -32,22 +32,30 @@ function finPartido(guardar){
 
     if(guardar==1){
       //alert('guardo');
+      /*
       var lineaSave = localStorage.estadisticasglobales;
       if (lineaSave){
         localStorage.estadisticasglobales+="#"+generateLineSave();
       }else{
         localStorage.estadisticasglobales=generateLineSave();
       }
+      */
+     
+      grabarDatosBaseDatosCloud();
+      document.getElementById("btnsave").style.display="none";   
+      //guardar el mail
+      var mail =window.localStorage.getItem("mail");
+      window.localStorage.clear();
+      window.localStorage.setItem("mail",mail);
+
     }else{
       //alert(' no guardo');
+      window.sessionStorage.clear();
+      window.top.location.href = "./index.html";
     }
     //alert(localStorage.estadisticasglobales);
-    
-    
 
-    window.sessionStorage.clear();
-    window.top.location.href = "./index.html";
-    
+
 }
 
 
@@ -180,4 +188,33 @@ function generateLineSave(){
   return texto;
 }
 
+function grabarDatosBaseDatosCloud(){
 
+  var email = window.localStorage.getItem("mail");
+  var genRegistro = generateLineSave();
+  
+  var firebaseConfig = {
+    apiKey: "AIzaSyAqCapvT9IeJ2grEJnPOXNYSiNgGWs_vXk",
+    authDomain: "testbps-f9198.firebaseapp.com",
+    databaseURL: "https://testbps-f9198.firebaseio.com",
+    projectId: "testbps-f9198",
+    storageBucket: "testbps-f9198.appspot.com",
+    messagingSenderId: "536759306978",
+    appId: "1:536759306978:web:81ea9d31340003a658ecbb"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var matchsref = firebase.database().ref("registros");
+  
+  //var ref = new Firebase('https://testbps-f9198.firebaseio.com');
+
+  //var matchsref = ref.child("registros");
+  //console.log("inicio del push")
+  matchsref.push ({
+      mail: email,
+      registro: genRegistro
+  });
+  //console.log("fin del push")
+  alert('Datos guardados')
+}

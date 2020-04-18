@@ -1,23 +1,137 @@
 function carga(){
+    //cargalocal()
+    
+    if (localStorage.estadisticasglobales!=null){        
+         //si no hacemos la carga local
+         cargalocal();
+    }else{
+       //si no hay nada cargado se trae la info de la bd en el cloud
+       cargaFirebase();
+    }
+    //console.log("2");
+    //cargaFirebase();
+   
+}
+function cargalocal(){
 
     //cargas en un array las estadísticas totales
     var arr = localStorage.estadisticasglobales.split("#");
+    //alert(arr);
     var datosLinea="";
+    var separador=";";
     if (arr && arr.length > 0){
         
         for (i = 0; i < arr.length; i++) {
-            datosLinea = arr[i].split(";");
+            datosLinea = arr[i].split(separador);
             //alert(arr[i]);
             agregarFila(datosLinea, i);
             //alert(datosLinea);
         }
-    }
-    
-    
-
+    }        
 }
+
+function cargaFirebase(){
+    var separador=";";
+    var firebaseConfig = {
+        apiKey: "AIzaSyAqCapvT9IeJ2grEJnPOXNYSiNgGWs_vXk",
+        authDomain: "testbps-f9198.firebaseapp.com",
+        databaseURL: "https://testbps-f9198.firebaseio.com",
+        projectId: "testbps-f9198",
+        storageBucket: "testbps-f9198.appspot.com",
+        messagingSenderId: "536759306978",
+        appId: "1:536759306978:web:81ea9d31340003a658ecbb"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+   var arr="";
+   var i=0;
+    
+    var mail = window.localStorage.getItem("mail");
+    var playersRef = firebase.database().ref("registros/");
+
+   
+    playersRef.orderByChild("mail").equalTo(mail).on("child_added", function(data) {
+        
+        
+            console.log("Equal to filter: " + data.val().mail+" - "+data.val().num);
+            //printInformacion(data.val().registro,separador);
+            var datosArrLinea = data.val().registro.split(separador);
+            agregarFila(datosArrLinea, i);
+            i++;
+        
+            if(arr.length>0){
+                arr+='#'+data.val().registro;
+            }else{
+                arr=data.val().registro;
+            }
+            
+            localStorage.estadisticasglobales=arr;
+        
+        
+        
+    });
+    
+    //console.log("1");
+
+    /*
+    const dbref=firebase.database().ref().child('registros');
+    var arr="";
+    //var i=0;
+    dbref.on('value',function(snapshot){
+
+        snapshot.forEach(function(childSnapshot) {
+            
+
+            //console.log(childSnapshot.key);
+
+            //console.log(childSnapshot.val().mail);
+            //console.log(childSnapshot.val().registro);
+            
+            if(arr.length>0){
+                arr+='#'+childSnapshot.val().registro;
+            }else{
+                arr=childSnapshot.val().registro;
+            }
+
+            //var datosArrLinea = childSnapshot.val().registro.split(",");
+            //alert(datosArrLinea);
+            //agregarFila(datosArrLinea, i);
+            //i++;
+            
+            //alert(childSnapshot.key+"-"+childSnapshot.val());
+            
+        })
+        //arr="-";
+        //alert(1+"-"+arr);
+        if (arr.length>0){
+            localStorage.estadisticasglobales=arr;
+            printInformacion(arr,',');
+        }
+        
+    });
+    */
+
+    
+}
+
+function printInformacion(arr, separador){
+    var arr = arr.split("#");
+    var datosLinea="";
+    if (arr && arr.length > 0){
+        
+        for (i = 0; i < arr.length; i++) {
+            datosLinea = arr[i].split(separador);
+            //alert(datosLinea);
+            agregarFila(datosLinea, i);
+            //alert(datosLinea);
+        }
+    }
+}
+
 function getPartidoSelected(lineselected){
     //alert(lineselected);
+    
     window.sessionStorage.detallepartido=lineselected;
     location.href='./detallepartido.html';
 }
@@ -61,7 +175,7 @@ function agregarFila(datosLines, id){
     //lineatabla+=crearCelda(t1,id)+crearCelda(t2,id)+crearCelda(t3,id)+crearCelda(te,id)+crearCelda(puntos,id)+crearCelda(asistencias,id);
 
     //alert(lineatabla);
-    var row = document.getElementById("tablaestadisticas").insertRow(-1);
+    var row = document.getElementById("tablaestadisticas").insertRow(1);
     row.innerHTML = lineatabla;   
 }
 

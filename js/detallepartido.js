@@ -2,10 +2,11 @@ function carga(){
 
     var arr = localStorage.estadisticasglobales.split("#");
     var datosLinea="";
+    var separador=";"
     
     if (arr && arr.length > 0){
         var lineselected = window.sessionStorage.detallepartido;
-        datosLinea = arr[lineselected].split(";");
+        datosLinea = arr[lineselected].split(separador);
         cargarDatosPartido(datosLinea);
         //alert(datosLinea);
     }
