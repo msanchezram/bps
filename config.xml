@@ -16,5 +16,10 @@
   <author href="https://build.phonegap.com" email="support@phonegap.com">
       marcos
   </author>
+    
+   <preference name="permissions"                value="none"/>
+   <preference name="fullscreen"                 value="true" />  
+    
+   <access origin="*"/>   
 
 </widget>
