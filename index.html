@@ -4,14 +4,13 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css">  
 
 </head>
-<body class="body1">
-<header>
-  <h3><img class="imgIcono" src="./images/wbna-logo.ico">B - P - S</h3>
-</header>
-
+<body class="body1" onload="carga()">
+<div class="header_class">
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps
+</div>
 <br>
 <br>
 <br>
@@ -19,15 +18,25 @@
   <tr>
     <td>
       <section>
-        <button type="button" onclick="location.href ='./configuracion.html';">Configuración</button>    
+        <button type="button" onclick="location.href ='./configuracion.html';">CONFIGURACIÓN</button>    
     </section>
     <br>
     <section>
-      <button type="button" onclick="location.href = './estadisticasglobales.html';">Estadísticas</button>
+      <button type="button" onclick="location.href = './players.html';">MIS JUGADORES/AS</button>
+    </section>
+    <br>
+    <!--
+    <section>
+      <button type="button" onclick="location.href = './players.html';">SEGUIR JUGADORES/AS</button>
+    </section>
+    <br>
+    -->
+    <section>
+      <button type="button" onclick="location.href = './estadisticasglobales.html';">ESTADÍSTICAS</button>
     </section>
     <br>
     <section>
-      <button type="button" onclick="location.href = './crearpartido.html';">Crear Partido</button>
+      <button type="button" onclick="location.href = './crearpartido.html';">CREAR PARTIDO</button>
     </section>
     </td>
   </tr>

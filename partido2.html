@@ -4,31 +4,32 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css">  
 
 </head>
-<body onload="carga()">
+<body class="body1" onload="carga()">
   <table>
-    
     <tr>
-      <td><button type="button" onclick="buttonSelected('frea')" style="background-color: black;color: white;border: 2px solid rgb(250, 0, 21);">F.REA</button> </td>
-      <td><button type="button" onclick="buttonSelected('frec')" style="background-color: black;color: white;border: 2px solid rgb(70, 223, 0);">F.REC</button> </td>       
+      <td><button type="button" onclick="buttonSelected('asi')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">ASIST</button> </td>
+      <td><button type="button" onclick="buttonSelected('reo')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">REBOTE</button> </td>  
     </tr>
     <tr>
-      <td><button type="button" onclick="buttonSelected('asi')" style="background-color: black;color: white;border: 2px solid rgb(102, 255, 0);">ASIS</button> </td>
-      <td><button type="button" onclick="buttonSelected('tap')" style="background-color: black;color: white;border: 2px solid rgb(0, 255, 136);">TAP</button> </td>       
+      <td><button type="button" onclick="buttonSelected('tap')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">TAP.FAV</button> </td>
+      <td><button type="button" onclick="buttonSelected('tapc')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">TAP.CON</button> </td>       
     </tr>
     <tr>
-      <td><button type="button" onclick="buttonSelected('red')" style="background-color: black;color: white;border: 2px solid rgb(119, 0, 255);">REB.D</button> </td>
-      <td><button type="button" onclick="buttonSelected('reo')" style="background-color: black;color: white;border: 2px solid rgb(252, 185, 0);">REB.O</button> </td>  
+    <tr>      
+      <td><button type="button" onclick="buttonSelected('frec')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">FAL.REC</button> </td>       
+      <td><button type="button" onclick="buttonSelected('frea')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">FAL.PER</button> </td>
     </tr>
     <tr>
-      <td><button type="button" onclick="buttonSelected('bar')" style="background-color: black;color: white;border: 2px solid rgb(255, 251, 0);">B.REC</button> </td>
-      <td><button type="button" onclick="buttonSelected('bap')" style="background-color: black;color: white;border: 2px solid rgb(224, 1, 1);">B.PER</button> </td>
+    <tr>
+      <td><button type="button" onclick="buttonSelected('bar')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">BAL.REC</button> </td>
+      <td><button type="button" onclick="buttonSelected('bap')" style="background-color: #121212;color: #41cbfe;border: 1px solid #41cbfe;">BAL.PER</button> </td>
     </tr>
     <tr><td colspan="2"><br></td></tr>
     <tr>
-      <td colspan="2"><button type="button" onclick="buttonDeshacer()" style="background-color: black;color: white;border: 2px solid white;">DESHACER</button> </td>
+      <td colspan="2"><button type="button" onclick="buttonDeshacer()" style="background-color: #121212;color: #808080;border: 1px solid #808080;">DESHACER</button> </td>
       </tr>
   </table>
   <div id="snackbar">Some text some message..</div>

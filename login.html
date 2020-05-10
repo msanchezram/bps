@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style_dark.css">  
+
+</head>
+<body class="body1" onload="carga()">
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
+<div class="header_class">
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./configuracion.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+</div>
+<br>
+
+<table>
+  <tr>
+    <td style="text-align:right">
+    <button class="button_dark" id="is" onclick="selAction('is');">INICIAR SESIÓN</button>
+    </td>
+    <td style="text-align:left">
+      <button class="button_dark" id="cu" onclick="selAction('cu');">CREAR USUARIO</button>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr></htr></td></tr>
+  <tr>
+    <td>Mail</td>
+    <td style="text-align:left"><input type="text" class="input_dark" id="fmail" name="mail" placeholder="mail ..."></td>
+  </tr>
+  <tr>
+    <td>Fecha nacimiento</td>
+    <td style="text-align:left"><input type="text" class="input_dark" id="fnac" name="fnac" placeholder="DDMMAAAA"></td>
+  </tr>
+  <tr><td colspan="2">&nbsp;</td></tr>
+  <tr><td colspan="2">&nbsp;</td></tr>
+  <tr><td colspan="2"><button onclick="accept()">ACEPTAR</button></td></tr>
+</table>
+<div id="snackbar" style="background-color:rgb(86, 86, 86)">...</div>
+<script src="./js/util.js"></script>
+<script src="./js/firebase.js"></script>
+<script src="./js/login.js"></script>
+</body>
+</html>

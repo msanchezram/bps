@@ -4,30 +4,34 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css">  
 
 </head>
-<body class="body2">
-<header class="header3">
-  <!--B - P - S-->
+<body class="body1" onload="carga()">
+
+  <div class="header_class">
+    <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps
+  </div>
+  <br>
   <table>
     <tr>
-      <td><a href="./crono.html" target="iframe_a"><img class="imgIcono" src="./images/crono-2.png"></a></td>
-      <td><a href="./partido.html" target="iframe_a"><img class="imgIcono" src="./images/basketball_basket-2.png"></a></td>
-      <td><a href="./partido2.html" target="iframe_a"><img class="imgIcono" src="./images/pelota-de-baloncesto.png"></a></td>
-      <td><a href="./estadisticas.html" target="iframe_a"><img class="imgIcono" src="./images/estadisticas-negro-3.png"></a></td>
+      <td><a id="acr" href="./crono.html" target="iframe_a"><img id="cr" class="imgIcono2" src="./images/crono-on.png" onclick="selecOption(1)"></a></td>
+      <td><a id="atb" href="./partido.html" target="iframe_a"><img id="tb" class="imgIcono2" src="./images/tablero-off.png" onclick="selecOption(2)"></a></td>
+      <td><a href="./partido2.html" target="iframe_a"><img id="ba" class="imgIcono2" src="./images/ball-off.png" onclick="selecOption(3)"></a></td>
+      <td><a href="./estadisticas.html" target="iframe_a"><img id="ca" class="imgIcono3" src="./images/cancha-off.png" onclick="selecOption(4)"></a></td>
     </tr>
+    <tr><td colspan="4"><hr></hr></td></tr>
   </table>
-</header>
+
 <!--
 <br>
 <div class="div2">
 
 </div>
 -->
-<iframe height="476px" width="100%" src="./crono.html" name="iframe_a"></iframe>
+<iframe style="display:block; width:100%; border:none;height:450px;" src="./crono.html" name="iframe_a"></iframe>
      
 
-
+<script src="./js/plantillapartido.js"></script>
 </body>
 </html>

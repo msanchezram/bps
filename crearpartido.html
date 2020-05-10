@@ -4,51 +4,68 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css">  
 
 </head>
-<body  class="body1" onload="carga()">
-<header class="header2">
-  <a href="./index.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>&nbsp;B - P - S
-</header>
-<div>
-    <label for="fteam">Equipo</label>
-    <input type="text" id="fteam" name="team" placeholder="equipo de la jugadora...">
- 
-    <label for="fname">Nombre de la jugadora</label>
-    <input type="text" id="fname" name="nombre" placeholder="nombre de la jugadora...">
+<body class="body1" onload="carga()">
 
-    <label for="lcategoria">Categoria y nivel</label>
-    <input type="text" id="lcategoria" name="categoria" placeholder="categoria y nivel el equipo..">
+  <div class="header_class">
+    <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./index.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+  </div>
+  <br>
 
-    <label for="lname">Fecha</label>
-    <input type="text" id="lfecha" name="fecha" placeholder="dd/mm/aaaa..">
-
-    <label for="lrival">Nombre del rival</label>
-    <input type="text" id="lrival" name="rival" placeholder="nombre del rival..">
-  
-    <label for="lcomplejidad">Complejidad del rival</label>
-    <select id="complejidad" name="lcomplejidad">
-      <option value="1">Somos mucho mejores</option>
-      <option value="2">Somos mejores pero por poco</option>
-      <option value="3">Será un partido competitivo</option>
-      <option value="4">Somos peores pero por poco </option>
-      <option value="5">Nos van a dar una paliza</option>
-    </select>
-
+  <table>
+    <tr>
+      <td id="titulo" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254)" colspan="2">
+        Crear partido
+      </td>
+    </tr>
+    <tr><td colspan="2"><hr></htr></td></tr>
+    <tr>
+      <td>Jugador/a</td>
+      <td style="text-align:left">
+        <select class="input_dark" style="width: 100%;" id="fplayer"  name="fplayer">
+          <!--
+          <option value="1">Paula - Cadete B - Joventut Les Corts - 2019/20</option>
+          <option value="2">Paula - Junior C - Joventut Les Corts - 2019/20</option>        
+          -->
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Fecha <font style="font-size: 12px;">(DD/MM/AAAA)</font></td>
+      <td style="text-align:left">
+        
+        <input type="text" class="input_dark" id="lfecha" name="lfecha" placeholder="DD/MM/AAAA">
+      </td>
+    </tr>
+    <tr>
+      <td>Rival</td>
+      <td style="text-align:left">        
+        <input type="text" class="input_dark" id="lrival" name="lrival" placeholder="nombre del rival...">
+      </td>
+    </tr>
+    <tr>
+      <td>Dificultad</td>
+      <td style="text-align:left">
+             
+        <select class="input_dark" style="width: 100%;" id="complejidad" name="lcomplejidad">
+          <option value="1">Somos mucho mejores</option>
+          <option value="2">Somos mejores pero por poco</option>
+          <option value="3">Será un partido competitivo</option>
+          <option value="4">Son mejores pero por poco </option>
+          <option value="5">Nos van a dar una paliza</option>
+        </select>      
+      </td>
+    </tr>
     
-    <!--
-    <label for="lpartes">Cuantas partes tiene el partido</label>
-    <select id="partes" name="lpartes">
-      <option value="4">4 partes</option>
-      <option value="8">8 partes</option>
-    </select>
-    -->
-    <input id="creapartido" class="bsubmit" type="button" value="Iniciar el partido" onclick="crearPartido()" >
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr><td colspan="2"><button id="acc" onclick="crearPartido()">ACEPTAR</button></td></tr>
+  </table>
   
-</div>
-     
-
+<div id="snackbar" style="background-color:rgb(86, 86, 86)">...</div>
+<script src="./js/util.js"></script>
 <script src="./js/crearpartido.js"></script>
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style_dark.css">  
+
+</head>
+<body class="body1" onload="carga()">
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
+<div class="header_class">
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./index.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+</div>
+<br>
+<table>
+  <tr>
+    <td id="titulo" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254)" colspan="2">
+      Mis jugadores/as
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr></htr></td></tr>
+</table>
+ 
+  <table class="table_dark" id="tableplayers">
+    <!--
+    <tr>
+      <td>
+        <a href="javascript:alert('Test');">
+        <table class="table_test">
+          <tr><td><font style="font-weight: bold;font-size:24px;color: #FFFFFF;">Paula</font></td></tr>
+          <tr><td>Joventut Les Corts 2020/21</td></tr>
+          <tr><td><font style="font-size:14px;">Cadete B Nivel B</font></td></tr>
+        </table>   
+        </a>   
+      </td>
+    </tr>
+-->
+  </table>
+   
+  
+  <div id="snackbar" style="background-color:rgb(86, 86, 86)">...</div>
+  <div class="fixed">
+    <button class="button_round_dark" onclick="createplayer()"><b>+</b></button>&nbsp;&nbsp;
+  </div>
+ 
+
+
+  <script src="./js/util.js"></script>
+  <script src="./js/firebase.js"></script>
+<script src="./js/players.js"></script>
+</body>
+</html>

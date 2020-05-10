@@ -4,10 +4,10 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css">  
 
 </head>
-<body onload="carga()">
+<body class="body1" onload="carga()">
     <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
@@ -15,37 +15,108 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-
-<header class="header2">
-    <a href="./index.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>&nbsp;Estadisticas Generales
-  </header>
-
-<table class="table2" id="tablaestadisticas">
-    <tr>
-        <th>Nombre</th>
-        <th>Fecha</th>
-        <th>Rival (Compl)</th>
-        <th>Tir</th>
-        <th>Pts</th>
-        <th>As</th>
-        <th>Val</th>
+<div class="header_class">
+    <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="javascript:salirestadisticas()"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+</div>
+<table>    
+    <tr>      
+      <td style="text-align:left">
+        <select class="input_dark" style="width: 100%;" id="fplayer"  name="fplayer" onchange="onchangeplayer()">
+         <!--
+          <option value="1">Paula - Cadete B - Joventut Les Corts - 2019/20</option>
+          <option value="2">Paula - Junior C - Joventut Les Corts - 2019/20</option>        
+         -->
+        </select>
+      </td>
     </tr>
-    <!--
-    <tr>
-        <td>Paula Sánchez Lorenzo</td>
-        <td>20/02/2020</td>
-        <td>CB Granollers (4)</td>
-        <td>2/4</td>
-        <td>2/4</td>
-        <td>2/4</td>
-        <td>2/4</td>
-        <td>16</td>
-        <td>4</td>
-    </tr>
-    -->
-
-
 </table>
+<table class="table_dark" id="tablepartidos">
+    
+    <tr>
+    <!--
+      <td>
+        <a href="javascript:alert('Test');">
+        <table class="table_test">
+            <tr>
+                <td colspan="9">
+                    <font style="font-weight: bold;font-size:20px;color: #41cbfe;">Lima Horta</font><font style="font-size:18px;"> (45-49)</font>&nbsp;<img id="cr" class="imgIcono4" src="./images/win.png">
+                </td>
+               
+                
+            </tr>
+            <tr>
+                <td>29/11/2019</td>
+                <td>tir</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">5/12</td>
+                <td>pts</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                <td>asi</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">3</td>
+                <td>val</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+            </tr>                    
+        </table>   
+        </a>   
+      </td>
+    </tr>
+    <tr>
+        <td>
+          <a href="javascript:alert('Test');">
+            <table class="table_test">
+                <tr>
+                    <td colspan="9">
+                        <font style="font-weight: bold;font-size:20px;color: #41cbfe;">Escolapis de Sarrià</font><font style="font-size:18px;"> (45-49)</font>
+                    </td>
+                   
+                    
+                </tr>
+                <tr>
+                    <td>29/11/2019</td>
+                    <td>tir</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">5/12</td>
+                    <td>pts</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                    <td>asi</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">3</td>
+                    <td>val</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                </tr>                    
+            </table> 
+          </a>   
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a href="javascript:alert('Test');">
+            <table class="table_test">
+                <tr>
+                    <td colspan="9">
+                        <font style="font-weight: bold;font-size:20px;color: #41cbfe;">CB Viladecavalls</font><font style="font-size:18px;"> (45-49)</font>
+                    </td>
+                   
+                    
+                </tr>
+                <tr>
+                    <td>29/11/2019</td>
+                    <td>tir</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">5/12</td>
+                    <td>pts</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                    <td>asi</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">3</td>
+                    <td>val</td>
+                    <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                </tr>                    
+            </table>
+          </a>   
+        </td>
+        -->
+      </tr>
+  </table>
+
+<div id="snackbar">Some text some message..</div>
+<script src="./js/util.js"></script>
+<script src="./js/firebase.js"></script>
 <script src="./js/estadisticasglobales.js"></script>
 </body>
 </html>

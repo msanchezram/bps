@@ -4,62 +4,77 @@
 <title>.:B-P-S:.</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="./css/style.css">  
+<link rel="stylesheet" href="./css/style_dark.css"> 
 
 </head>
-<body onload="cargaCrono()">
+<body class="body1" onload="cargaCrono()">
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
-<header class="header2">
-  Periodos
-</header>
 <br>
-<table>
-  <tr>
-    <td><button  type="button" onclick="modificaDatosPartido()" >Modificar datos del partido</button></td>
-  </tr>
-</table>
+<br>
+<br>
 
 <br>
 <br>
 <table>
   <tr>
-    <td><button id="1" onclick="buttonSelected(1);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">1</button> </td>
-    <td><button id="2" onclick="buttonSelected(2);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">2</button> </td>
-    <td><button id="3" onclick="buttonSelected(3);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">3</button> </td>
-    <td><button id="4" onclick="buttonSelected(4);" type="button" style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);">4</button> </td>
+    <td><button id="1" onclick="buttonSelected(1);" type="button" style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148)">1</button> </td>
+    <td><button id="2" onclick="buttonSelected(2);" type="button" style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);">2</button> </td>
+    <td><button id="3" onclick="buttonSelected(3);" type="button" style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);">3</button> </td>
+    <td><button id="4" onclick="buttonSelected(4);" type="button" style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);">4</button> </td>
   </tr>
 
 </table>
-
 <br>
 <br>
 <br>
-<table>
+<br>
+<br>
+<br>
+<br>
+<table style="width: 100%;">
   <tr>
-  <td><button id="myBtnFin" type="button" onclick="modalFinPartido()" >Fin del partido</button></td>
-</tr>
+    <td style="width: 50%;">
+      <input type="button" class="buttoncrono"  onclick="modificaDatosPartido()" value="MODIFICAR DATOS" />
+      <!--<button class="buttoncrono" onclick="modificaDatosPartido()" ></button>-->
+    </td>
+    <td style="width: 50%;">
+      <input type="button" id="myBtnFin" class="buttoncrono"   value="FINAL PARTIDO" />
+      <!--<button class="buttoncrono" id="myBtnFin" onclick="modalFinPartido()" >Fin del partido</button>-->
+    </td>
+  </tr>
 </table>
+
+
 <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span> 
-      <p>Estás seguro que quieres acabar el partido?</p> 
+      <p style="color:#41cbfe;padding: 10px;">Final del partido</p> 
+      <hr style="border: 1px solid #41cbfe;"></hr>
+      <p style="color:#FFFFFF;padding: 10px;">Estás seguro que quieres acabar el partido?
+      <br> Por favor introduce el resultado final</p>
       <table>
         <tr>
-          <td><button type="button" onclick="finPartido(0)" >Sí</button></td>          
-          <td><button type="button" onclick="cerrarModal()" >No</button></td>
+          <td id="lteam">Joventut Les Corts</td>
+          <td><input type="text" class="input_dark_resultado" id="iteam" name="iteam" placeholder="000" maxlength="3"></td>
+          <td id="lrival">Visitante</td>
+          <td><input type="text" class="input_dark_resultado" id="irival" name="iteam" placeholder="000" maxlength="3"></td>
         </tr>
+        <tr><td colspan="4">&nbsp;</td></tr>
         <tr>
-          <td colspan="2">&nbsp;</td>
+          <td colspan="2" style="border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="finPartido(1)" value="Si" /></td>
+          <td colspan="2"  style="border-top:1px solid #808080; border-left: 1px solid #808080;border-collapse: collapse;"><input id="btnsave" type="button" class="button_modal_resultado"  onclick="finPartido(0)" value="Salir sin guardar"/></td>
         </tr>
-        <tr><td colspan="2"><button id="btnsave" type="button" onclick="finPartido(1)">Guardar la información</button></td></tr>
-      </table>      
-        
+
+      </table>
   </div>
 
 </div>
+<div id="snackbar">Some text some message..</div>
+<script src="./js/util.js"></script>
+<script src="./js/firebase.js"></script>
 <script src="./js/crono.js"></script>
 </body>
 </html>
