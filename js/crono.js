@@ -9,12 +9,12 @@ function cargaCrono(){
 }
 function buttonSelected(idboton){
     //cambiar style al boton seleccionado a tipo button2
-    document.getElementById("1").style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("2").style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("3").style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("4").style="background-color: black;color: white;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById("1").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById("2").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById("3").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById("4").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
 
-    document.getElementById(idboton).style="background-color: white;color: black;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById(idboton).style="background-color: #41cbfe;color: black;border: 2px solid black);"
     //alert(idboton);
     window.sessionStorage.setItem("periodo",idboton);
 
@@ -30,23 +30,17 @@ function modificaDatosPartido(){
 }
 function finPartido(guardar){
 
-    if(guardar==1){
-      //alert('guardo');
-      /*
-      var lineaSave = localStorage.estadisticasglobales;
-      if (lineaSave){
-        localStorage.estadisticasglobales+="#"+generateLineSave();
-      }else{
-        localStorage.estadisticasglobales=generateLineSave();
-      }
-      */
-     
+    if(guardar==1){     
+      
       grabarDatosBaseDatosCloud();
-      document.getElementById("btnsave").style.display="none";   
+      //desactivar boton guardar
+      document.getElementById("btnsave").style.opacity="0.6"; 
+      document.getElementById("btnsave").style.cursor ="not-allowed";
+      
       //guardar el mail
-      var mail =window.localStorage.getItem("mail");
-      window.localStorage.clear();
-      window.localStorage.setItem("mail",mail);
+      //var mail =window.localStorage.getItem("mail");
+      //window.localStorage.clear();
+      //window.localStorage.setItem("mail",mail);
 
     }else{
       //alert(' no guardo');
@@ -54,8 +48,6 @@ function finPartido(guardar){
       window.top.location.href = "./index.html";
     }
     //alert(localStorage.estadisticasglobales);
-
-
 }
 
 
@@ -71,6 +63,8 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
   modal.style.display = "block";
+  window.document.getElementById("lteam").innerHTML=window.sessionStorage.team;
+  window.document.getElementById("lrival").innerHTML=window.sessionStorage.rival;
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -82,6 +76,7 @@ span.onclick = function() {
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    
   }
 }
 
@@ -156,7 +151,7 @@ function generateLineSave(){
   texto+=getDatosPorPeriodo(3,"asi")+";";
   texto+=getDatosPorPeriodo(4,"asi")+";"; //pos 49
   
-  //tapones
+  //tapones a favor
   texto+=getDatosPorPeriodo(1,"tap")+";";
   texto+=getDatosPorPeriodo(2,"tap")+";";
   texto+=getDatosPorPeriodo(3,"tap")+";";
@@ -183,38 +178,51 @@ function generateLineSave(){
   texto+=getDatosPorPeriodo(1,"bar")+";";
   texto+=getDatosPorPeriodo(2,"bar")+";";
   texto+=getDatosPorPeriodo(3,"bar")+";";
-  texto+=getDatosPorPeriodo(4,"bar");     //pos 67
+  texto+=getDatosPorPeriodo(4,"bar")+";";     //pos 69
 
+  //tapones en contra
+  texto+=getDatosPorPeriodo(1,"tapc")+";";//pos 70
+  texto+=getDatosPorPeriodo(2,"tapc")+";";
+  texto+=getDatosPorPeriodo(3,"tapc")+";";
+  texto+=getDatosPorPeriodo(4,"tapc");    //pos 73
   return texto;
 }
 
 function grabarDatosBaseDatosCloud(){
 
   var email = window.localStorage.getItem("mail");
+  var idplayer= window.sessionStorage.idplayer;
   var genRegistro = generateLineSave();
-  
-  var firebaseConfig = {
-    apiKey: "AIzaSyAqCapvT9IeJ2grEJnPOXNYSiNgGWs_vXk",
-    authDomain: "testbps-f9198.firebaseapp.com",
-    databaseURL: "https://testbps-f9198.firebaseio.com",
-    projectId: "testbps-f9198",
-    storageBucket: "testbps-f9198.appspot.com",
-    messagingSenderId: "536759306978",
-    appId: "1:536759306978:web:81ea9d31340003a658ecbb"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  //console.log("1 "+genRegistro);
+  var linealista=genRegistro.split(";");
+  //añadir valoracion
+  var valoraciontotal=0;
+  var valoraciontotalGlobal=0;
+  valoraciontotal=getValoracionJugador(linealista,1);
+  valoraciontotalGlobal+=valoraciontotal;
+  genRegistro+=";"+valoraciontotal+";";
+  valoraciontotal=getValoracionJugador(linealista,2);
+  valoraciontotalGlobal+=valoraciontotal;
+  genRegistro+=valoraciontotal+";";
+  valoraciontotal=getValoracionJugador(linealista,3);
+  valoraciontotalGlobal+=valoraciontotal;
+  genRegistro+=valoraciontotal+";";
+  valoraciontotal=getValoracionJugador(linealista,4);
+  valoraciontotalGlobal+=valoraciontotal;
+  genRegistro+=valoraciontotal+";";
+  genRegistro+=valoraciontotalGlobal+";";
+  //console.log("2 "+genRegistro);
+  var iteam=0;
+  var irival=0;
+  if(document.getElementById("iteam").value.length>0)
+    iteam=document.getElementById("iteam").value;
+  if(document.getElementById("irival").value.length > 0)
+    irival=document.getElementById("irival").value;
+  //añadir resultado
+  genRegistro+=iteam+";"+irival;
 
-  var matchsref = firebase.database().ref("registros");
-  
-  //var ref = new Firebase('https://testbps-f9198.firebaseio.com');
+  //console.log("3 "+genRegistro);
+  mostrarToast("registrando los datos!!",1000); 
+  saveMatchFB(email,idplayer,genRegistro);
 
-  //var matchsref = ref.child("registros");
-  //console.log("inicio del push")
-  matchsref.push ({
-      mail: email,
-      registro: genRegistro
-  });
-  //console.log("fin del push")
-  alert('Datos guardados')
 }

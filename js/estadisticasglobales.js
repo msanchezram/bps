@@ -1,164 +1,213 @@
 function carga(){
     //cargalocal()
-    
-    if (localStorage.estadisticasglobales!=null){        
+    if (window.sessionStorage.detallepartido!=null){        
+        //miramos si venimos de detalle partido para que restaure la información que ya había
+        var partidoselected = window.sessionStorage.detallepartido;
+        window.sessionStorage.removeItem("detallepartido");
          //si no hacemos la carga local
-         cargalocal();
+         cargalocal(partidoselected);
     }else{
        //si no hay nada cargado se trae la info de la bd en el cloud
        cargaFirebase();
     }
-    //console.log("2");
-    //cargaFirebase();
-   
 }
-function cargalocal(){
+function salirestadisticas(){
+    //limpiar datos memoria
+    window.localStorage.removeItem("playerselected");
+    window.localStorage.removeItem("playerpartidos");
+    window.sessionStorage.removeItem("detalleidpartido");
+    window.sessionStorage.removeItem("detallepartido");
+    
+    window.location.href="./index.html";
+}
+function cargalocal(playerselected){
 
-    //cargas en un array las estadísticas totales
-    var arr = localStorage.estadisticasglobales.split("#");
-    //alert(arr);
-    var datosLinea="";
-    var separador=";";
-    if (arr && arr.length > 0){
-        
-        for (i = 0; i < arr.length; i++) {
-            datosLinea = arr[i].split(separador);
-            //alert(arr[i]);
-            agregarFila(datosLinea, i);
-            //alert(datosLinea);
-        }
-    }        
+  //carga del select y asignación
+  var player=window.localStorage.playerselected;
+  var players = window.localStorage.players;
+  players= JSON.parse(players);
+  cargaselectplayer(players);
+  document.getElementById("fplayer").value = player;
+  var all=false;
+  if (player=="0"){
+    all=true;
+  }
+  //console.log("cargalocal "+player);
+  //carga lista partidos
+  if (window.sessionStorage.detalleidpartido!=null){
+        //si tenemos el idpartido informado no hemos borrado el partido
+        //console.log("tenemos el idpartido recargamos desde memoria");
+        window.sessionStorage.removeItem("detalleidpartido");
+        var arr = JSON.parse(window.localStorage.playerpartidos);    
+        printInformacion(arr,";",all);
+  }else{
+      //console.log("no tenemos el idpartido recargamos de fire partidos");
+      //si está borrado es que hemos borrado el partido y debemos volver a cargar los demas partidos
+        onchangeplayer();
+  }
+  
 }
+
 
 function cargaFirebase(){
-    var separador=";";
-    var firebaseConfig = {
-        apiKey: "AIzaSyAqCapvT9IeJ2grEJnPOXNYSiNgGWs_vXk",
-        authDomain: "testbps-f9198.firebaseapp.com",
-        databaseURL: "https://testbps-f9198.firebaseio.com",
-        projectId: "testbps-f9198",
-        storageBucket: "testbps-f9198.appspot.com",
-        messagingSenderId: "536759306978",
-        appId: "1:536759306978:web:81ea9d31340003a658ecbb"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
 
-   var arr="";
-   var i=0;
-    
-    var mail = window.localStorage.getItem("mail");
-    var playersRef = firebase.database().ref("registros/");
 
+   var claveuser=window.localStorage.clave;
+   if(!claveuser){
+       //si la clave no existe lo mandamos a cargar
+       window.location.href="./login.html";
+   }
+   var players = window.localStorage.players;
    
-    playersRef.orderByChild("mail").equalTo(mail).on("child_added", function(data) {
+   if (!players){      
+       window.location.href="./login.html";
+       
+   }else{ 
         
-        
-            console.log("Equal to filter: " + data.val().mail+" - "+data.val().num);
-            //printInformacion(data.val().registro,separador);
-            var datosArrLinea = data.val().registro.split(separador);
-            agregarFila(datosArrLinea, i);
-            i++;
-        
-            if(arr.length>0){
-                arr+='#'+data.val().registro;
-            }else{
-                arr=data.val().registro;
-            }
-            
-            localStorage.estadisticasglobales=arr;
-        
-        
-        
-    });
-    
-    //console.log("1");
+        players= JSON.parse(players);
 
-    /*
-    const dbref=firebase.database().ref().child('registros');
-    var arr="";
-    //var i=0;
-    dbref.on('value',function(snapshot){
-
-        snapshot.forEach(function(childSnapshot) {
-            
-
-            //console.log(childSnapshot.key);
-
-            //console.log(childSnapshot.val().mail);
-            //console.log(childSnapshot.val().registro);
-            
-            if(arr.length>0){
-                arr+='#'+childSnapshot.val().registro;
-            }else{
-                arr=childSnapshot.val().registro;
-            }
-
-            //var datosArrLinea = childSnapshot.val().registro.split(",");
-            //alert(datosArrLinea);
-            //agregarFila(datosArrLinea, i);
-            //i++;
-            
-            //alert(childSnapshot.key+"-"+childSnapshot.val());
-            
-        })
-        //arr="-";
-        //alert(1+"-"+arr);
-        if (arr.length>0){
-            localStorage.estadisticasglobales=arr;
-            printInformacion(arr,',');
+        if (players.length>0){
+                cargaselectplayer(players);
         }
-        
-    });
-    */
-
-    
+        if (players.length==1){
+            onchangeplayer();
+        }
+   } 
 }
 
-function printInformacion(arr, separador){
-    var arr = arr.split("#");
-    var datosLinea="";
-    if (arr && arr.length > 0){
-        
-        for (i = 0; i < arr.length; i++) {
-            datosLinea = arr[i].split(separador);
-            //alert(datosLinea);
-            agregarFila(datosLinea, i);
-            //alert(datosLinea);
-        }
+function onchangeplayer(){
+    var idplayer = document.getElementById("fplayer").value;
+           
+    for(var i=document.getElementById("tablepartidos").rows.length;i>0;i--) {
+        document.getElementById("tablepartidos").deleteRow(i-1);
+    }
+    //console.log(idplayer);
+    if (idplayer == "0"){
+        //cargar todos los partidos
+        var email = window.localStorage.mail;
+        cargaPartidosPorAtributo("mail",email, true);
+    }else if (idplayer.length > 0){
+        //cargamos los partidos del jugador seleccionado
+        cargaPartidosPorAtributo("player",idplayer, false);
     }
 }
 
-function getPartidoSelected(lineselected){
-    //alert(lineselected);
+function cargaselectplayer(players){
+
+    var text="";
+    //var count=0;
+
+    if (players.length>0){
+        var x = document.getElementById("fplayer");
+        var option = document.createElement("option");
+        
+        if (players.length>1){
+            option.text = "Selecciona jugador/a"; //primero blanco para que no lo cargue todo
+            option.value="";
+            x.add(option);        
+        }
+
+        for(i=0;i<players.length;i++){        
+            //sólo podemos crear partido con los players activos
+            x = document.getElementById("fplayer");
+            option = document.createElement("option");
+            text=players[i].nombre+" - "+ players[i].categoria + "- "+ players[i].equipo + " - "+ players[i].temporada;            
+            option.text = text;
+            option.value=players[i].idplayer;
+            x.add(option);
+            //count++;               
+        }
+        if (players.length>1){
+            x = document.getElementById("fplayer");
+            option = document.createElement("option");
     
+            option.text = "Todos/as"; //opción de que nos traiga todos lo partidos de todos los jugadores
+            option.value="0";
+            x.add(option);
+        }        
+    }else{
+        //no hay players activos
+        mostrarToast('no hay jugadores/as ...',3000);
+    }
+}
+
+function printInformacion(arr, separador, all){
+    //var arr = arr.split("#");
+    var datosLinea="";
+    if (arr && arr.length > 0){
+        
+        for (i = 0; i < arr.length; i++) {
+            //console.log( arr[i]);
+            datosLinea = arr[i].registro.split(separador);
+            //alert(datosLinea);
+            agregarFila(datosLinea, i, all, datosLinea = arr[i].idpartido);
+            //alert(datosLinea);
+        }
+    }else{
+        mostrarToast("no hay partidos registrados...",3000);
+    }
+}
+
+function getPartidoSelected(lineselected, idpartido){
+    //alert(lineselected);
+    //console.log(idpartido);
+    window.localStorage.playerselected=document.getElementById("fplayer").value;
     window.sessionStorage.detallepartido=lineselected;
+    window.sessionStorage.detalleidpartido=idpartido;
     location.href='./detallepartido.html';
 }
 
-/*
-        <th>Nombre</th>
-        <th>Fecha</th>
-        <th>Rival (Compl)</th>
-        <th>Tiros</th>
-        <th>Punt</th>
-        <th>Asis</th>
-        <th>Valor</th>
-*/
 
-function agregarFila(datosLines, id){
+function agregarFila(datosLines, id, all, idpartido){
+    //console.log(datosLines);
+    var nombre=datosLines[1];
+    var categoria=datosLines[2];
+    var fecha=datosLines[3];
+    var rival=datosLines[4];
+
+    var tiros = getDatosTotalTirosIn(datosLines)+"/"+getDatosTotalTirosAll(datosLines);
+    var puntos=getPuntos(datosLines);
+    var asistencias=sumaDatos(46, 50, datosLines);
+    var valoracion=getValoracion(datosLines);
+    var puntuacionEquipo=datosLines[datosLines.length-2];
+    var puntuacionRival=datosLines[datosLines.length-1];
+
+ 
+    linea="<td>";
+    linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
+    linea+="<table class='table_test'>";
+    linea+="<tr><td  colspan='9'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
+    if(!(puntuacionEquipo == 0 && puntuacionRival ==0)){            
+        linea+="&nbsp;<font style='font-size:18px;'>"+puntuacionEquipo+"-"+puntuacionRival+"</font>";        
+    }
+    if (all){
+        linea+="&nbsp;<font style='font-size:14px;color:#FFFFFF'>("+nombre+" - "+categoria+")</font>";
+    }
+    if (puntuacionEquipo > puntuacionRival){ //en caso que haya un resultado se muestra
+        linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/win.png'>";
+    }
+    
+    linea+="</td></tr>";
+    linea+="<tr><td>"+fecha+"</td><td>tir</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+tiros+"</td>";
+    linea+="<td>pts</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+puntos+"</td>";
+    linea+="<td>asi</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+asistencias+"</td>";
+    linea+="<td>val</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+valoracion+"</td></tr>";
+    linea+="</table>";
+    linea+="</a>";
+    linea+="</td>";
+    var row = document.getElementById("tablepartidos").insertRow(0);
+    row.innerHTML = linea; 
+    //console.log(puntuacionEquipo+"-"+puntuacionRival);
+}
+
+function agregarFilaOld(datosLines, id){
     var nombre=datosLines[1];
     var fecha=datosLines[3].split("/");
     fecha = fecha[0]+"/"+fecha[1]+"/ "+fecha[2];
     var rival=datosLines[4]+" ("+datosLines[5]+")";
 
-    /*
-    var t1=getDatoTotal(1, datosLines);
-    var t2=getDatoTotal(2, datosLines);
-    var t3=getDatoTotal(3, datosLines);
-    var te=getDatoTotal('e', datosLines);
-    */
-    var valoracion=getValoracion(datosLines);
+  
+    var valoracion= getValoracionJugador(datosLines, null);
     var tiros = getDatosTotalTirosIn(datosLines)+"/"+getDatosTotalTirosAll(datosLines);
     var puntos=getPuntos(datosLines);
     var asistencias=sumaDatos(46, 50, datosLines);
@@ -229,27 +278,7 @@ function getDatosTotalTirosAll(datosLines){
     return totalTry;
 }
 
-/*
-function getDatoTiros(tipoTiro,datosLines){
-    var dato="";
-    
-    switch(tipoTiro){
-        case 1:
-            dato= sumaDatos(6, 10, datosLines)+"/"+sumaDatos(10, 14, datosLines);
-            break;
-        case 2:
-            dato= sumaDatos(14, 18, datosLines)+"/"+sumaDatos(18, 22, datosLines);
-            break;
-        case 3:
-            dato= sumaDatos(22, 26, datosLines)+"/"+sumaDatos(26, 30, datosLines);
-            break;
-        default: //son entradas
-            dato= sumaDatos(30, 34, datosLines)+"/"+sumaDatos(34, 38, datosLines);
-            break;
-    }
-    return dato;
-}
-*/
+
 function sumaDatos(posDesde, posHasta, datosLines){
     var sumadatos=0;
     for (x = posDesde; x < posHasta; x++) {

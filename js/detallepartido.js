@@ -1,28 +1,47 @@
 function carga(){
 
-    var arr = localStorage.estadisticasglobales.split("#");
+    var arr = JSON.parse(window.localStorage.playerpartidos);
     var datosLinea="";
     var separador=";"
+    var playerdata=0;
     
     if (arr && arr.length > 0){
         var lineselected = window.sessionStorage.detallepartido;
-        datosLinea = arr[lineselected].split(separador);
-        cargarDatosPartido(datosLinea);
-        //alert(datosLinea);
+        //console.log(arr[lineselected]);
+        //console.log(lineselected);
+        datosLinea = arr[lineselected].registro.split(separador);  
+        playerdata = arr[lineselected].player;
+        //console.log(playerdata);
+        cargarDatosPartido(datosLinea,playerdata);
+        //alert(datosLinea);        
     }
 
 }
 
-function cargarDatosPartido(datosLinea){
+function cargarDatosPartido(datosLinea, playerdata){
 
-    document.getElementById("team").innerHTML=datosLinea[0];
-    document.getElementById("nombre").innerHTML=datosLinea[1];
-    document.getElementById("categoria").innerHTML=datosLinea[2];
+    //document.getElementById("team").innerHTML=datosLinea[0];
+    var player = getDatosPlayer(playerdata);
+    //console.log(player);
+    document.getElementById("player").innerHTML=datosLinea[1]+" - "+datosLinea[0]+" - "+player.temporada;
+    document.getElementById("categoria").innerHTML=datosLinea[2]+" ("+player.nivel+")";
     document.getElementById("fecha").innerHTML=datosLinea[3];
-    document.getElementById("rival").innerHTML=datosLinea[4];
-    document.getElementById("complejidad").innerHTML=datosLinea[5];
+    document.getElementById("rival").innerHTML=datosLinea[4]+" ("+datosLinea[5]+")";
+    //document.getElementById("complejidad").innerHTML=datosLinea[5];
 
     datosPartido(datosLinea);
+}
+
+function getDatosPlayer(playerdata){
+    var players = window.localStorage.players;
+    players= JSON.parse(players);
+
+    for (var i=0;i<players.length;i++){
+        //console.log(players[i].idplayer);
+        if (players[i].idplayer==playerdata){
+            return players[i];
+        }
+    }
 }
 
 function datosPartido(datosLinea){
@@ -44,16 +63,18 @@ function datosPartido(datosLinea){
     printarDatosAccionesPartido('frec',datosLinea,42);    
     //asistencias
     printarDatosAccionesPartido('asi',datosLinea,46);
-    //tapones
+    //tapones a favor
     printarDatosAccionesPartido('tap',datosLinea,50);
     //rebotes ofensivos
     printarDatosAccionesPartido('reo',datosLinea,54);
-    //rebotes defensivos
-    printarDatosAccionesPartido('red',datosLinea,58);
+    //rebotes defensivos no se printan
+    //printarDatosAccionesPartido('red',datosLinea,58);
     //balones perdidos
     printarDatosAccionesPartido('bap',datosLinea,62);
     //balones recuperados
     printarDatosAccionesPartido('bar',datosLinea,66);
+    //tapones en contra
+    printarDatosAccionesPartido('tapc',datosLinea,70);
     
     printarValoraciones(datosLinea);
 }
@@ -83,7 +104,7 @@ function printarDatosAccionesPartido(accion,datosLinea,posInicio){
     var total=0;
     for(x=posInicio;x<posInicio+4;x++){
         total+=Number(datosLinea[x]);
-        //alert(accion+"-"+(x-posInicio+1)+"  "+total);
+        //console.log(accion+"-"+(x-posInicio+1)+"  "+total);
         document.getElementById(accion+"-"+(x-posInicio+1)).innerHTML=datosLinea[x];
     }
     document.getElementById(accion+"-total").innerHTML=total;
@@ -154,4 +175,41 @@ function getTotalValoracionPosicion(datosLinea, posInicio){
     valor+=Number(datosLinea[posInicio]); //balones recuperados
 
     return valor;
+}
+
+function deletePartido(){
+    var idpartidodelete= window.sessionStorage.detalleidpartido;
+    //console.log("borrar partido "+idpartidodelete);
+    mostrarToast("borrando partido...",2000);
+    
+    deletePartidoFB(idpartidodelete);
+}
+
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtnFin");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";    
+  }
+}
+
+function cerrarModal(){
+    modal.style.display = "none";
 }

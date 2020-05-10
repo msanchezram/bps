@@ -8,13 +8,15 @@ function carga(){
     //cambiar datos del jugador/a
     //alert("carga");
     var totalPuntos=0;
-    document.getElementById("team").innerHTML=window.sessionStorage.team;
-    document.getElementById("nombre").innerHTML=window.sessionStorage.nombre;
-    document.getElementById("categoria").innerHTML=window.sessionStorage.categoria;
-    document.getElementById("fecha").innerHTML=window.sessionStorage.fecha;
-    document.getElementById("rival").innerHTML=window.sessionStorage.rival;
-    document.getElementById("complejidad").innerHTML=window.sessionStorage.complejidad;
 
+    var datosplayer=window.sessionStorage.nombre+" - "+ window.sessionStorage.categoria + "- "+ window.sessionStorage.team;
+    document.getElementById("player").innerHTML = datosplayer;
+    //document.getElementById("team").innerHTML=window.sessionStorage.team;
+    //document.getElementById("nombre").innerHTML=window.sessionStorage.nombre;
+    //document.getElementById("categoria").innerHTML=window.sessionStorage.categoria;    
+    document.getElementById("rival").innerHTML=window.sessionStorage.rival+ " ("+window.sessionStorage.complejidad+")";
+    //document.getElementById("complejidad").innerHTML=window.sessionStorage.complejidad;
+    document.getElementById("fecha").innerHTML=window.sessionStorage.fecha;
     //printamos datos de los tiros
     
     printDatosTiros();
@@ -84,6 +86,7 @@ function carga(){
     document.getElementById("reo-total").innerHTML=total;
     valoracion+=total//rebotes
 
+    /*
     document.getElementById("red-1").innerHTML=getDatosPorPeriodo(1,"red");
     val1+=getDatosPorPeriodo(1,"red");
     document.getElementById("red-2").innerHTML=getDatosPorPeriodo(2,"red");
@@ -95,6 +98,7 @@ function carga(){
     total=getDatosPorPeriodo(1,"red")+getDatosPorPeriodo(2,"red")+getDatosPorPeriodo(3,"red")+getDatosPorPeriodo(4,"red");
     document.getElementById("red-total").innerHTML=total;
     valoracion+=total//rebotes
+    */
 
     //balones recuperados y perdidos
     document.getElementById("bap-1").innerHTML=getDatosPorPeriodo(1,"bap");
@@ -120,6 +124,23 @@ function carga(){
     total=getDatosPorPeriodo(1,"bar")+getDatosPorPeriodo(2,"bar")+getDatosPorPeriodo(3,"bar")+getDatosPorPeriodo(4,"bar");
     document.getElementById("bar-total").innerHTML=total;
     valoracion+=total//balones recuperados
+
+    document.getElementById("tapc-1").innerHTML=getDatosPorPeriodo(1,"tapc");
+    console.log(val1);
+    val1-=getDatosPorPeriodo(1,"tapc");
+    document.getElementById("tapc-2").innerHTML=getDatosPorPeriodo(2,"tapc");
+    val2-=getDatosPorPeriodo(2,"tapc");
+    console.log(val2);
+    document.getElementById("tapc-3").innerHTML=getDatosPorPeriodo(3,"tapc");
+    val3-=getDatosPorPeriodo(3,"tapc");
+    console.log(val3);
+    document.getElementById("tapc-4").innerHTML=getDatosPorPeriodo(4,"tapc");
+    val4-=getDatosPorPeriodo(4,"tapc");
+    console.log(val4);
+    total=getDatosPorPeriodo(1,"tapc")+getDatosPorPeriodo(2,"tapc")+getDatosPorPeriodo(3,"tapc")+getDatosPorPeriodo(4,"tapc");
+    document.getElementById("tapc-total").innerHTML=total;
+    //console.log(total);
+    valoracion-=total//tapones en contra
 
     document.getElementById("val-1").innerHTML=val1;
     document.getElementById("val-2").innerHTML=val2;

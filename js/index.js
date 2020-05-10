@@ -1,5 +1,8 @@
-function borrarhistorial(){
-    if (confirm('Estás seguro de borrar todo el historial de partidos?')){
-        window.localStorage.clear();
+function carga(){
+    var clave=window.localStorage.clave;
+    if (!clave){
+        window.location.href="./login.html";
     }
+    
 }
+

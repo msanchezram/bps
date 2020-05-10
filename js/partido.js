@@ -32,7 +32,7 @@ function buttonSelected(seleccion){
         startToast(mensaje);
 
     }else{
-        alert("Es necesario activar un periodo para registrar los datos");
+        startToast("Error : Es necesario activar un periodo para registrar los datos");
     }
 
 }
@@ -41,21 +41,33 @@ function buttonDeshacer(){
     //alert(window.sessionStorage.deshacer);
     var seleccion = window.sessionStorage.deshacer;
     //alert(seleccion);
-    if (seleccion && seleccion.length>0 ){
-        valor = Number(window.sessionStorage.getItem(seleccion))-1;
-        //alert(window.sessionStorage.deshacer);
-        window.sessionStorage.setItem(window.sessionStorage.deshacer, valor);
-        seleccion=seleccion.substring(0,seleccion.length-2);
-        var mensaje = descrifrarMensajeToast(seleccion);
-        //alert(mensaje);
-        startToast("Deshacer: "+ mensaje);
-    }else {
-        startToast("No hay nada por deshacer");
-    }
+    if (sessionStorage.periodo && Number(sessionStorage.periodo)>0){
+        if (seleccion && seleccion.length>0 ){
+            valor = Number(window.sessionStorage.getItem(seleccion))-1;
+            //alert(window.sessionStorage.deshacer);
+            if (valor < 0){
+                valor=0;
+            }
+            window.sessionStorage.setItem(window.sessionStorage.deshacer, valor);
+            seleccion=seleccion.substring(0,seleccion.length-2);
+            var mensaje = descrifrarMensajeToast(seleccion);
+            //alert(mensaje);
+            startToast("Deshacer: "+ mensaje);
+        }else {
+            startToast("No hay nada por deshacer");
+        }
+    } else {
+        startToast("Error : Es necesario activar un periodo para registrar los datos");
+    }    
 }
 
 function startToast(mensaje) {
     var x = document.getElementById("snackbar");
+    if (mensaje.indexOf("Error")>= 0 ){
+        x.style.backgroundColor="red";
+        x.style.color="white";
+        x.style.left="35%";
+    }    
     x.innerHTML=mensaje;
     x.className = "show";
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
@@ -75,11 +87,12 @@ function descrifrarMensajeToast(mensaje){
         case 'frea' : retorno="Falta realizada";break;
         case 'frec'	: retorno="Falta recibida";break;
         case 'asi'	: retorno="Asistencia";break;
-        case 'tap' : retorno="Tapón";break;
+        case 'tap' : retorno="Tapón a favor";break;
         case 'red' : retorno="Rebote defensivo";break;
-        case 'reo' : retorno="Rebote ofensivo";break;
+        case 'reo' : retorno="Rebote";break;
         case 'bar' : retorno="Balón recuperado";break;
         case 'bap' : retorno="Balón perdido";break;
+        case 'tapc' : retorno="Tapón en contra";break;
         default:retorno=mensaje;
     }
     return retorno;
