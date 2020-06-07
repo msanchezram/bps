@@ -12,6 +12,7 @@ a {
 }
   .body1 {
     font-family: Arial, Helvetica, sans-serif;
+    
     /*background-image: url("./../images/wnba.jpg");*/
     box-align: center;
     background-color: #121212;
@@ -26,6 +27,7 @@ a {
     text-align: left;
     font-size: 24px;
     color: white;
+    
    }
    .header_class {
     background-color: #323232;
@@ -35,6 +37,7 @@ a {
     width:100%;
     padding:1px;
     font-weight: bold; 
+    
    }
   .header2 {
     /*background-color: rgb(236, 236, 236);*/
@@ -58,13 +61,17 @@ a {
     color:  #FFFFFF;
     background-color: rgb(86, 86, 86);
     border: 1px solid #808080; 
-    padding: 15px 32px;
+    padding: 15px 1px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
     width: 80%;
+    cursor: pointer;
+    transition: 0.4s;
+    
   }
+
   .button_dark {
     border: none;
     color:  #FFFFFF;
@@ -76,23 +83,50 @@ a {
     display: inline-block;
     font-size: 12px;
     width: 80%;
+    cursor: pointer;
+    transition: 0.4s;
   }
 
   .button_round_dark {
+    /*
     background-color: rgb(86, 86, 86);
     border: 1px solid #808080; 
     color: white;
-    padding: 20px;
+    */
+    background-color: #6d8bbd;
+    border: 1px solid white; 
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;    
+    cursor: pointer;
+    border-radius: 50%;
+    width: 57px;
+    height: initial;
+    margin: 10px -4px;
+    cursor: pointer;
+    transition: 0.4s;
+    
+    /*
+     padding: 30px;
+     
+    ;*/
+  }
+
+  .button_partido {
+    border: none;
+    color:  #FFFFFF;
+    background-color: rgb(86, 86, 86);
+    border: 1px solid #808080; 
+    padding: 15px 1px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 20px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 50%;
-    width: initial;
-    height: initial;
+    width: 90%;
   }
+
 
   .fixed {
     position: fixed;
@@ -200,8 +234,23 @@ a {
   border-bottom: 1px solid #323232;
 }
 
-  .input_dark[type=text], select {
-    width: 90%;
+  .input_dark[type=text] {
+    width: 85%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 1px solid rgb(65, 203, 254); /*#41cbfe*/
+    font-size: 14px;
+    background-color:#121212;
+    opacity: 1;
+    color: #FFFFFF;
+  }
+
+  .input_dark_select {
+    width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -230,8 +279,8 @@ a {
     border-radius: 4px;
     padding: 5px;
     */
-    height: 30px;
-    width: 30px;
+    height: 35px;
+    width: 35px;
   }
   .imgIcono2 {
     /*
@@ -254,8 +303,8 @@ a {
     border: 0px solid #ddd;
     padding: 5px;
     */
-    height: 18px;
-    width: 18px;
+    height: 19px;
+    width: 19px;
   }
 
   /* toast de la pantalla partido*/
@@ -365,13 +414,15 @@ a {
     background-color: #282828;
     /*border: 0.5px solid #808080;   */
     border: none;
-    padding: 15px 32px;
+    padding: 15px 1px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     width: 100%;
     border-collapse: collapse;
+    cursor: pointer;
+    transition: 0.4s;
   }
   
   .buttoncrono {
@@ -379,13 +430,47 @@ a {
     color:  #FFFFFF;
     background-color: rgb(86, 86, 86);
     border: 1px solid #808080; 
-    padding: 15px 32px;
+    padding: 15px 1px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     
     width: 100%;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+
+  .buttonlogin {
+    border: none;
+    color:  #FFFFFF;
+    background-color: rgb(86, 86, 86);
+    border: 1px solid #808080; 
+    padding: 15px 1px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    width: 100%;
+  }
+/*Acordeon búsqueda de followers*/
+  .panelacordeon {
+    /*padding: 0 18px;*/
+    display: none;
+    overflow: hidden;
+  }
+
+  .accordion {
+    background-color:  #121212;
+    color: rgb(65, 203, 254);    
+    /*padding: 18px;*/
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+    transition: 0.4s;
+    cursor: pointer;
   }
 
   
