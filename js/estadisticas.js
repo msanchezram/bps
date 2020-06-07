@@ -9,8 +9,10 @@ function carga(){
     //alert("carga");
     var totalPuntos=0;
 
-    var datosplayer=window.sessionStorage.nombre+" - "+ window.sessionStorage.categoria + "- "+ window.sessionStorage.team;
+    //var datosplayer=window.sessionStorage.nombre+" - "+ window.sessionStorage.categoria + "- "+ window.sessionStorage.team;
+    var datosplayer=window.sessionStorage.nombre+" - "+ window.sessionStorage.team;
     document.getElementById("player").innerHTML = datosplayer;
+    document.getElementById("categoria").innerHTML = window.sessionStorage.categoria;
     //document.getElementById("team").innerHTML=window.sessionStorage.team;
     //document.getElementById("nombre").innerHTML=window.sessionStorage.nombre;
     //document.getElementById("categoria").innerHTML=window.sessionStorage.categoria;    
@@ -126,17 +128,17 @@ function carga(){
     valoracion+=total//balones recuperados
 
     document.getElementById("tapc-1").innerHTML=getDatosPorPeriodo(1,"tapc");
-    console.log(val1);
+    //console.log(val1);
     val1-=getDatosPorPeriodo(1,"tapc");
     document.getElementById("tapc-2").innerHTML=getDatosPorPeriodo(2,"tapc");
     val2-=getDatosPorPeriodo(2,"tapc");
-    console.log(val2);
+    //console.log(val2);
     document.getElementById("tapc-3").innerHTML=getDatosPorPeriodo(3,"tapc");
     val3-=getDatosPorPeriodo(3,"tapc");
-    console.log(val3);
+    //console.log(val3);
     document.getElementById("tapc-4").innerHTML=getDatosPorPeriodo(4,"tapc");
     val4-=getDatosPorPeriodo(4,"tapc");
-    console.log(val4);
+    //console.log(val4);
     total=getDatosPorPeriodo(1,"tapc")+getDatosPorPeriodo(2,"tapc")+getDatosPorPeriodo(3,"tapc")+getDatosPorPeriodo(4,"tapc");
     document.getElementById("tapc-total").innerHTML=total;
     //console.log(total);
@@ -166,15 +168,16 @@ function printDatosTiros(){
 //datos de puntos del partido
 
 
+
     //tiros 1
     document.getElementById("t1-1").innerHTML=getDatosAciertosPorPeriodo(1,1)+"/"+getDatosIntentosPorPeriodo(1,1);
     val1+=getDatosAciertosPorPeriodo(1,1)-getDatosIntentosPorPeriodo(1,1); //valoracion por periodo
     document.getElementById("t1-2").innerHTML=getDatosAciertosPorPeriodo(2,1)+"/"+getDatosIntentosPorPeriodo(2,1);
-    val2+=getDatosAciertosPorPeriodo(1,1)-getDatosIntentosPorPeriodo(2,1); //valoracion por periodo
+    val2+=getDatosAciertosPorPeriodo(2,1)-getDatosIntentosPorPeriodo(2,1); //valoracion por periodo    
     document.getElementById("t1-3").innerHTML=getDatosAciertosPorPeriodo(3,1)+"/"+getDatosIntentosPorPeriodo(3,1);
-    val3+=getDatosAciertosPorPeriodo(1,1)-getDatosIntentosPorPeriodo(3,1); //valoracion por periodo
+    val3+=getDatosAciertosPorPeriodo(3,1)-getDatosIntentosPorPeriodo(3,1); //valoracion por periodo
     document.getElementById("t1-4").innerHTML=getDatosAciertosPorPeriodo(4,1)+"/"+getDatosIntentosPorPeriodo(4,1);
-    val4+=getDatosAciertosPorPeriodo(1,1)-getDatosIntentosPorPeriodo(4,1); //valoracion por periodo
+    val4+=getDatosAciertosPorPeriodo(4,1)-getDatosIntentosPorPeriodo(4,1); //valoracion por periodo
     var totalIn = getDatosAciertosPorPeriodo(1,1)+getDatosAciertosPorPeriodo(2,1)+getDatosAciertosPorPeriodo(3,1)+getDatosAciertosPorPeriodo(4,1);    
     var totalTry= getDatosIntentosPorPeriodo(1,1)+getDatosIntentosPorPeriodo(2,1)+getDatosIntentosPorPeriodo(3,1)+getDatosIntentosPorPeriodo(4,1);
     document.getElementById("t1-total").innerHTML=totalIn+"/"+totalTry;
@@ -184,7 +187,10 @@ function printDatosTiros(){
     var porcentaje = totalIn*100/totalTry;
     document.getElementById("t1-porcentaje").innerHTML=Math.round(porcentaje);
     totalPuntos=totalIn;
-    
+    //console.log("val1 "+val1);
+    //console.log("val2 "+val2);
+    //console.log("val3 "+val3);
+    //console.log("val4 "+val4);
     //alert(totalPuntos);
     //tiros 2
     document.getElementById("t2-1").innerHTML=getDatosAciertosPorPeriodo(1,2)+"/"+getDatosIntentosPorPeriodo(1,2);

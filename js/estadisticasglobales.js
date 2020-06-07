@@ -5,7 +5,8 @@ function carga(){
         var partidoselected = window.sessionStorage.detallepartido;
         window.sessionStorage.removeItem("detallepartido");
          //si no hacemos la carga local
-         cargalocal(partidoselected);
+         //cargalocal(partidoselected);
+         cargalocal();
     }else{
        //si no hay nada cargado se trae la info de la bd en el cloud
        cargaFirebase();
@@ -20,7 +21,8 @@ function salirestadisticas(){
     
     window.location.href="./index.html";
 }
-function cargalocal(playerselected){
+//function cargalocal(playerselected){
+function cargalocal(){
 
   //carga del select y asignación
   var player=window.localStorage.playerselected;
@@ -77,19 +79,32 @@ function cargaFirebase(){
 
 function onchangeplayer(){
     var idplayer = document.getElementById("fplayer").value;
-           
-    for(var i=document.getElementById("tablepartidos").rows.length;i>0;i--) {
-        document.getElementById("tablepartidos").deleteRow(i-1);
-    }
+    
+    //limpiar tabla de resultados
+    limpiarTablaResultados("tablepartidos");
+    //for(var i=document.getElementById("tablepartidos").rows.length;i>0;i--) {
+    //    document.getElementById("tablepartidos").deleteRow(i-1);
+    //}
     //console.log(idplayer);
     if (idplayer == "0"){
         //cargar todos los partidos
         var email = window.localStorage.mail;
-        cargaPartidosPorAtributo("mail",email, true);
+        cargaPartidosPorAtributoFB("mail",email); //metodo Firebase
     }else if (idplayer.length > 0){
         //cargamos los partidos del jugador seleccionado
-        cargaPartidosPorAtributo("player",idplayer, false);
+        cargaPartidosPorAtributoFB("player",idplayer);
     }
+}
+
+function retCargaPartidosPorAtributo(arrpartidos){
+    window.localStorage.playerpartidos=JSON.stringify(arrpartidos);
+    var idplayer = document.getElementById("fplayer").value;
+    var all=false;
+    if (idplayer == "0"){
+        all=true;
+    }
+    
+    printInformacion(arrpartidos, ";", all);   //metodo de estadisticasglobales.js 
 }
 
 function cargaselectplayer(players){
@@ -140,7 +155,7 @@ function printInformacion(arr, separador, all){
             //console.log( arr[i]);
             datosLinea = arr[i].registro.split(separador);
             //alert(datosLinea);
-            agregarFila(datosLinea, i, all, datosLinea = arr[i].idpartido);
+            agregarFila(datosLinea, i, all, arr[i].idpartido, arr[i].publico, arr[i].likes );
             //alert(datosLinea);
         }
     }else{
@@ -158,7 +173,7 @@ function getPartidoSelected(lineselected, idpartido){
 }
 
 
-function agregarFila(datosLines, id, all, idpartido){
+function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     //console.log(datosLines);
     var nombre=datosLines[1];
     var categoria=datosLines[2];
@@ -176,30 +191,40 @@ function agregarFila(datosLines, id, all, idpartido){
     linea="<td>";
     linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
     linea+="<table class='table_test'>";
-    linea+="<tr><td  colspan='9'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
+    linea+="<tr><td  colspan='8' width='91%'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
     if(!(puntuacionEquipo == 0 && puntuacionRival ==0)){            
         linea+="&nbsp;<font style='font-size:18px;'>"+puntuacionEquipo+"-"+puntuacionRival+"</font>";        
-    }
-    if (all){
-        linea+="&nbsp;<font style='font-size:14px;color:#FFFFFF'>("+nombre+" - "+categoria+")</font>";
-    }
+    }        
     if (puntuacionEquipo > puntuacionRival){ //en caso que haya un resultado se muestra
         linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/win.png'>";
+    }    
+    if (publicado==1){
+        linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/publicado.png'>";
     }
-    
+    if (likes > 0){
+        linea+="<td width='9%'><span style='width:100%;text-align:right;color:#41cbfe;font-size:14px;font-weight: bold;'>"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;' src='./images/like-on.png'/></span></td>";
+    }else{
+        linea+="<td width='1%'>&nbsp</td>";
+    }
     linea+="</td></tr>";
+    if (all){
+        linea+="<tr><td colspan='9'><font style='font-size:16px;color:#FFFFFF'>"+nombre+" - "+categoria+"</font></td></tr>";
+    }
+    linea+="</table>";
+    linea+="<table class='table_test'>"
     linea+="<tr><td>"+fecha+"</td><td>tir</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+tiros+"</td>";
     linea+="<td>pts</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+puntos+"</td>";
     linea+="<td>asi</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+asistencias+"</td>";
     linea+="<td>val</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+valoracion+"</td></tr>";
     linea+="</table>";
+    
     linea+="</a>";
     linea+="</td>";
     var row = document.getElementById("tablepartidos").insertRow(0);
     row.innerHTML = linea; 
     //console.log(puntuacionEquipo+"-"+puntuacionRival);
 }
-
+/*
 function agregarFilaOld(datosLines, id){
     var nombre=datosLines[1];
     var fecha=datosLines[3].split("/");
@@ -227,7 +252,7 @@ function agregarFilaOld(datosLines, id){
     var row = document.getElementById("tablaestadisticas").insertRow(1);
     row.innerHTML = lineatabla;   
 }
-
+*/
 function crearCelda(variable, id){
     return "<td><a href='javascript:getPartidoSelected("+id+")'>"+variable+"</a></td>";
 }

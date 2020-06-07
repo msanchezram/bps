@@ -36,6 +36,14 @@ function deleteplayer(){
     deleteByIdPlayerFB(datosjugador.idplayer);
 }
 
+function retdeleteByIdPlayer(){
+    salir();
+}
+
+function salir(){
+    window.location.href="./players.html"
+}
+
 function getDatosJugador(numplayer){
     var jugador=new Object();
     if(document.getElementById("factivo").checked){

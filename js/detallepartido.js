@@ -1,30 +1,102 @@
-function carga(){
+var playerdata;
+var datosLineaFollowed;
+var datosLinea
+var publicado;
 
-    var arr = JSON.parse(window.localStorage.playerpartidos);
-    var datosLinea="";
+function carga(){
+    var arr;
+    var lineselected;
+
+    datosLinea="";
     var separador=";"
-    var playerdata=0;
+    playerdata=0;
     
-    if (arr && arr.length > 0){
-        var lineselected = window.sessionStorage.detallepartido;
-        //console.log(arr[lineselected]);
-        //console.log(lineselected);
-        datosLinea = arr[lineselected].registro.split(separador);  
+
+    //console.log("window.sessionStorage.detallepartido ->"+window.sessionStorage.detallepartido);
+    //console.log("window.sessionStorage.seguidosidpartido ->"+window.sessionStorage.seguidosidpartido);
+    if (window.sessionStorage.detallepartido!=null){
+        //venimos de estadisticasglobales
+        arr = JSON.parse(window.localStorage.playerpartidos);
+        lineselected = window.sessionStorage.detallepartido;
+
+       
+
+        datosLinea = arr[lineselected].registro.split(separador);
         playerdata = arr[lineselected].player;
-        //console.log(playerdata);
-        cargarDatosPartido(datosLinea,playerdata);
-        //alert(datosLinea);        
+        publicado  = arr[lineselected].publico;
+
+        if (publicado==1){
+            document.getElementById("myBtnPub").value="DESPUBLICAR"
+        }else{
+             //en caso de publicar el partido guardamos el formato adecuado para guardar en BD
+            datosLineaFollowed=arr[lineselected].registro;
+        }
+
+    }else if(window.sessionStorage.seguidosidpartido!=null){
+        //venimos de followedpartidos
+        arr = JSON.parse(window.localStorage.seguidospartido);
+        lineselected = window.sessionStorage.seguidosidpartido;
+        
+        datosLinea = arr[lineselected].registropartido.split(separador);
+        playerdata = null;
+        publicado = 0; //para seguidores esta variable no la necesitamos
+        //ocultamos los botones de borrar y publicar
+        document.getElementById("myBtnPub").style.display = "none";
+        document.getElementById("myBtnFin").style.display = "none";
     }
 
+    
+
+    //console.log(arr);
+    //cargaEstadisticasGlobales(arr,lineselected);
+    cargarDatosPartido(datosLinea,playerdata);
+    
+
 }
+
+function salir(){
+    if (window.sessionStorage.detallepartido!=null){
+        //venimos de estadisticasglobalesç
+        //console.log("volvemos a estadisticasglobales");
+        window.location.href="./estadisticasglobales.html";
+    }else if(window.sessionStorage.seguidosidpartido!=null){
+        //venimos de followed o index
+        if (window.sessionStorage.followpartidosFromIndex){
+            //si venimos de index
+            //console.log("volvemos a index");
+            window.sessionStorage.removeItem("followpartidosFromIndex"); //limpiamos la variable
+            window.location.href="./index.html";
+        }else{
+            //console.log("volvemos a followed");
+            window.location.href="./followedpartidos.html";
+        }
+        
+    }
+}
+
 
 function cargarDatosPartido(datosLinea, playerdata){
 
     //document.getElementById("team").innerHTML=datosLinea[0];
-    var player = getDatosPlayer(playerdata);
+    var player;
+    var playerSt="";
+    var categoriaSt="";
+    
+    playerSt= datosLinea[1]+" - "+datosLinea[0];
+    categoriaSt=datosLinea[2];
+    /*
+    //no nos podemos fiar de los datos actuales del player
+    //debemos tirar de los datos registrados en el partido
+    if (playerdata!=null){
+        player = getDatosPlayer(playerdata);
+        playerSt += " - "+player.temporada;
+        categoriaSt+= " ("+player.nivel+")";
+    }
+    */
+    
     //console.log(player);
-    document.getElementById("player").innerHTML=datosLinea[1]+" - "+datosLinea[0]+" - "+player.temporada;
-    document.getElementById("categoria").innerHTML=datosLinea[2]+" ("+player.nivel+")";
+    document.getElementById("player").innerHTML=playerSt;
+    document.getElementById("categoria").innerHTML=categoriaSt;
     document.getElementById("fecha").innerHTML=datosLinea[3];
     document.getElementById("rival").innerHTML=datosLinea[4]+" ("+datosLinea[5]+")";
     //document.getElementById("complejidad").innerHTML=datosLinea[5];
@@ -181,7 +253,7 @@ function deletePartido(){
     var idpartidodelete= window.sessionStorage.detalleidpartido;
     //console.log("borrar partido "+idpartidodelete);
     mostrarToast("borrando partido...",2000);
-    
+    deleteMatchesFollowedByIdPartidoFB(idpartidodelete,null, false);
     deletePartidoFB(idpartidodelete);
 }
 
@@ -212,4 +284,27 @@ window.onclick = function(event) {
 
 function cerrarModal(){
     modal.style.display = "none";
+}
+
+function publicarPartido(){
+    //var arr = JSON.parse(window.localStorage.playerpartidos);
+    
+    var idpartido=window.sessionStorage.detalleidpartido;
+    console.log("El valor de publicado="+publicado);
+    if (publicado==1){        
+         //hay que borrar la publicación
+        //console.log("idplayer="+playerdata);
+        //console.log("datosLinea="+datosLinea);    
+        mostrarToast("borrando publicación...",3000);    
+        console.log("despublicar idpartido="+idpartido);
+        deleteMatchesFollowedByIdPartidoFB(idpartido, "./estadisticasglobales.html", true);
+    }else{
+       //hay que publicar
+        mostrarToast("publicando el partido...",3000);
+        console.log("publicar idpartido="+idpartido);
+        //console.log("datosLineaFollowed="+datosLinea);
+        processMatchFollowedByPlayerFB(playerdata,idpartido,datosLineaFollowed,"./estadisticasglobales.html", false);
+    }
+    
+    
 }

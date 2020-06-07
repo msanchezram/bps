@@ -3,12 +3,12 @@ function carga(){
     var mail =window.localStorage.getItem("mail");
     var fechanac=window.localStorage.getItem("fnac");
     //alert(fechanac);
-    if (mail.length>0){
+    if (mail!=null && mail.length>0){
         document.getElementById("fmail").value=mail;
         document.getElementById("fnac").value=fechanac;
     }
 
-    document.getElementById("is").style="background-color: #41cbfe;color: black;";
+    document.getElementById("is").style="background-color: #41cbfe;color: black";
     window.sessionStorage.optionlogin="is";
     
 }
@@ -16,8 +16,8 @@ function selAction(id){
 
 
     
-    document.getElementById("is").style="background-color: rgb(86, 86, 86);color: FFFFFF";
-    document.getElementById("cu").style="background-color: rgb(86, 86, 86);color: FFFFFF";
+    document.getElementById("is").style="background-color: rgb(86, 86, 86);color: FFFFFF;";
+    document.getElementById("cu").style="background-color: rgb(86, 86, 86);color: FFFFFF;";
 
     document.getElementById(id).style="background-color: #41cbfe;color: black;";
     window.sessionStorage.optionlogin=id;

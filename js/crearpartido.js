@@ -15,6 +15,7 @@ function carga(){
         document.getElementById("lrival").value=window.sessionStorage.rival;
         document.getElementById("complejidad").value=window.sessionStorage.complejidad;        
         
+        document.getElementById("salir").style.visibility="hidden";
     }else{
         //crea partido
         var claveuser=window.localStorage.clave;
@@ -30,13 +31,21 @@ function carga(){
             //loadUserFB(mail, fnac, false);
             window.location.href="./players.html";
             
-        }else{    
+        }else{ 
             players= JSON.parse(window.localStorage.players);
-            //mostrarToast('Mostramos los datos', 3000);
-            //var players = JSON.parse(window.localStorage.players);
-            if (players.length>0){
-                cargaselectplayer(players);
-            }           
+            console.log("player -> "+players.length);
+            if(players.length==0){
+                mostrarToast("no hay jugadores ...",3000);
+                document.getElementById("acc").disabled=true;
+            }else{
+                
+                //mostrarToast('Mostramos los datos', 3000);
+                //var players = JSON.parse(window.localStorage.players);
+                if (players.length>0){
+                    cargaselectplayer(players);
+                } 
+            }
+                      
         }  
     }
 }
@@ -71,12 +80,13 @@ function cargaselectplayer(players){
         }else{
             dia=d.getDate();
         }
-        if (d.getMonth()<10){
-            mes+=d.getMonth();
+        if (d.getMonth()<9){
+            mes+=d.getMonth()+1;
         }else{
-            mes=d.getMonth();
+            mes=d.getMonth()+1;
         }
         var fechatext=dia+"/"+mes+"/"+d.getFullYear();
+        console.log(fechatext);
         document.getElementById("lfecha").value=fechatext;
 
     }
@@ -90,7 +100,7 @@ function crearPartido(){
     window.sessionStorage.posplayer = posplayer;
     //alert(posplayer+" -" + players.length);
     window.sessionStorage.nombre = players[posplayer].nombre;
-    window.sessionStorage.categoria =  players[posplayer].categoria;
+    window.sessionStorage.categoria =  players[posplayer].categoria+" ("+players[posplayer].nivel+")";
     window.sessionStorage.team = players[posplayer].equipo;
     window.sessionStorage.idplayer = players[posplayer].idplayer;
     window.sessionStorage.fecha=document.getElementById("lfecha").value;

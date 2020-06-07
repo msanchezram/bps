@@ -1,0 +1,34 @@
+window.localStorage.clave//guarda la clave de usuario en firebase
+window.localStorage.players //guarda la array de jugadores del usuario
+window.localStorage.mail //guarda el mail del usuario
+window.localStorage.fnac //guarda la fecha de nacimiento del usuario
+window.localStorage.playercrud //numero de lista del jugador que vamos a editar
+
+//login
+window.sessionStorage.optionlogin
+
+//partido
+window.sessionStorage.posplayer //al crear el partido guardamos la posición del player seleccionado en window.localStorage.players
+window.sessionStorage.nombre //al crear el partido guardamos el nombre
+window.sessionStorage.categoria  //al crear el partido guardamos la categoria;
+window.sessionStorage.team //al crear el partido guardamos el equipo;
+window.sessionStorage.fecha //al crear el partido guardamos la fecha
+window.sessionStorage.rival= //al crear el partido guardamos el rival
+window.sessionStorage.complejidad //al crear el partido guardamos el select de la complejidad
+window.sessionStorage.idplayer //al crear el partido guardamos el idplayer, para luego guardarlo en BD
+
+//estadisticasglobales
+window.localStorage.playerselected //el player que tenemos seleccionado cuando pulsamos ver datos de un partido, esto nos servirá para luego restaurar el select
+window.localStorage.playerpartidos //lista de partidos del player que estamos gestionando
+window.sessionStorage.detallepartido //registro de seleccion del partido seleccionado para ver datos
+window.sessionStorage.detalleidpartido //este el idpartido con el que vamos a detallepartido por si borramos el partido
+
+//partidos de seguidos
+window.sessionStorage.seguidosidpartido //guardamos el partido que hemos visto para cargar la información 
+window.localStorage.seguidospartido //guardamos lista de partidos de seguidos que estamos viendo
+window.sessionStorage.idfollowed //en esta variable informamos el idplayer que seguimos y vamos a ver sus partidos
+window.sessionStorage.followpartidosFromIndex //esta variable nos sirve para indicar que si vamos partidos de seguidos indicar que venimos de index
+
+//seguidos
+window.sessionStorage.followedplayers //guardamos la lista de jugadores que siguimos
+

@@ -9,12 +9,12 @@ function cargaCrono(){
 }
 function buttonSelected(idboton){
     //cambiar style al boton seleccionado a tipo button2
-    document.getElementById("1").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("2").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("3").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
-    document.getElementById("4").style="background-color: #121212;color: white;border: 2px solid rgb(148, 148, 148);"
+    document.getElementById("1").style="background-color: #121212;color: white;border: 1px solid rgb(148, 148, 148);"
+    document.getElementById("2").style="background-color: #121212;color: white;border: 1px solid rgb(148, 148, 148);"
+    document.getElementById("3").style="background-color: #121212;color: white;border: 1px solid rgb(148, 148, 148);"
+    document.getElementById("4").style="background-color: #121212;color: white;border: 1px solid rgb(148, 148, 148);"
 
-    document.getElementById(idboton).style="background-color: #41cbfe;color: black;border: 2px solid black);"
+    document.getElementById(idboton).style="background-color: #41cbfe;color: black;border: 1px solid black);"
     //alert(idboton);
     window.sessionStorage.setItem("periodo",idboton);
 
@@ -195,6 +195,10 @@ function grabarDatosBaseDatosCloud(){
   var genRegistro = generateLineSave();
   //console.log("1 "+genRegistro);
   var linealista=genRegistro.split(";");
+  var publico=0;
+  if(document.getElementById("fpublicar").checked){
+    publico=1;
+  }  
   //añadir valoracion
   var valoraciontotal=0;
   var valoraciontotalGlobal=0;
@@ -223,6 +227,18 @@ function grabarDatosBaseDatosCloud(){
 
   //console.log("3 "+genRegistro);
   mostrarToast("registrando los datos!!",1000); 
-  saveMatchFB(email,idplayer,genRegistro);
+  //saveMatchFB(email,idplayer,genRegistro);
+  var res = saveMatchFB(email,idplayer,genRegistro, publico);
+
+  //console.log("Idplayer "+idplayer);
+  //console.log("Key partido "+res);
+  //console.log("genregistro "+genRegistro);
+  if (publico==1){
+    processMatchFollowedByPlayerFB(idplayer,res,genRegistro,"./index.html",true);
+  }else{
+    window.top.location.href="./index.html";
+  }
+  
+  //console.log("fin grabarDatosBaseDatosCloud");
 
 }

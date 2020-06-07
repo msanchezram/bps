@@ -39,7 +39,12 @@ function cargarTablaPlayers(players){
         linea="<td>";
         linea+="<a href='javascript:editplayer("+i+");'>";
         linea+="<table class='table_test'>";
-        linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font></td></tr>";
+        linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font>";
+        if (obj.followers > 0){
+            linea+="<span style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:14px;font-weight: normal;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span>";
+        }
+        linea+="</td></tr>";
+        //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font> <span  style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:16px;font-weight: bold;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span></td></tr>";
         linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.equipo+" "+obj.temporada+"</font></td></tr>";
         linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
         linea+="</table>";
