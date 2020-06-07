@@ -11,26 +11,28 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
 <div class="header_class">
-  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./configuracion.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./configuracion.html"><img class="imgIcono" style="float:right;cursor:pointer" src="./images/volver-gris.png"></a>
 </div>
 <br>
 
 <table>
   <tr>
-    <td style="text-align:right">
-    <button class="button_dark" id="is" onclick="selAction('is');">INICIAR SESIÓN</button>
+    <td style="text-align:right;width: 50%;">
+    <button class="buttonlogin" id="is" onclick="selAction('is');">INICIAR SESIÓN</button>
     </td>
-    <td style="text-align:left">
-      <button class="button_dark" id="cu" onclick="selAction('cu');">CREAR USUARIO</button>
+    <td style="text-align:left;width: 50%;">
+      <button class="buttonlogin" id="cu" onclick="selAction('cu');">CREAR USUARIO</button>
     </td>
   </tr>
   <tr><td colspan="2"><hr></htr></td></tr>
+</table>
+<table>
   <tr>
     <td>Mail</td>
     <td style="text-align:left"><input type="text" class="input_dark" id="fmail" name="mail" placeholder="mail ..."></td>
   </tr>
   <tr>
-    <td>Fecha nacimiento</td>
+    <td>Fecha nacimiento<br><font style="font-size: 12px;">(DDMMAAAA)</font></td>
     <td style="text-align:left"><input type="text" class="input_dark" id="fnac" name="fnac" placeholder="DDMMAAAA"></td>
   </tr>
   <tr><td colspan="2">&nbsp;</td></tr>

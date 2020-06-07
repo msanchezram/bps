@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style_dark.css">  
+
+</head>
+<body class="body1" onload="carga()">
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
+<div class="header_class">
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="javascript:salir()"><img class="imgIcono" style="float:right;cursor:pointer" src="./images/volver-gris.png"></a>
+</div>
+<br>
+<table>
+  <tr>
+    <td id="titulo" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254);">
+     Partidos publicados
+    </td>
+  </tr>
+  <tr><td><hr></hr></td></tr>
+</table>
+ 
+  <table class="table_dark" id="seguidostablepartidos">
+    <tr>
+      <!--
+      <td>
+        
+        <table class="table_test" style="width: 100%;">
+            <tr>
+                <td style="width: 99%;">
+                    <font style="font-weight: bold;font-size:20px;color: #41cbfe;">Paula</font>&nbsp;Cadete B
+                </td>          
+                <td><a href="javascript:alert('Like');">
+                  <img id="cr" class="imgIcono4" src="./images/win-3.png">
+                  </a>
+                </td>                
+            </tr>
+          </table>
+          <a href="javascript:alert('Detalle Partido');">
+          <table class="table_test" style="width: 100%;">
+            <tr>
+              <td colspan="8"><font style="color: #6d8bbd">Joventut Les Corts 45 - Lima Horta 42</font></td>              
+            </tr>
+            <tr>
+                <td>29/11/2019</td>
+                <td>tir</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">5/12</td>
+                <td>pts</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+                <td>asi</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">3</td>
+                <td>val</td>
+                <td style="font-weight: bold;font-size:14px;color: #FFFFFF;">11</td>
+            </tr>                            
+        </table>  
+        </a>             
+      </td>
+      -->
+    </tr>     
+  </table>
+   
+  
+  <div id="snackbar">...</div>
+
+
+  <script src="./js/util.js"></script>
+  <script src="./js/firebase.js"></script>
+<script src="./js/followedpartidos.js"></script>
+</body>
+</html>

@@ -5,16 +5,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="./css/style_dark.css">  
-
+<link rel="stylesheet" href="./css/sidemenu.css">  
 </head>
 <body class="body1" onload="carga()">
 <div class="header_class">
-  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps 
+  <!--
+  <img class="imgIcono" src="./images/menu.png" style="float:right;cursor:pointer" onclick="openNav()" />
+  -->
+  <div class="container" onclick="myFunction(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
 </div>
+
+<iframe style="display:block; width:100%; border:none;height:405px;" src="./followedpartidosnohead.html" name="iframe_a"></iframe>
+   
+
 <br>
-<br>
-<br>
-<table>
+<table id="menuorigen" style="display: none;">
   <tr>
     <td>
       <section>
@@ -25,12 +35,15 @@
       <button type="button" onclick="location.href = './players.html';">MIS JUGADORES/AS</button>
     </section>
     <br>
-    <!--
+    
     <section>
-      <button type="button" onclick="location.href = './players.html';">SEGUIR JUGADORES/AS</button>
+      <button type="button" onclick="location.href = './followers.html';">SEGUIR JUGADORES/AS</button>
     </section>
     <br>
-    -->
+    <section>
+      <button type="button" onclick="location.href = './followedpartidos.html';">PARTIDOS JUGARDORES/AS QUE SIGO</button>
+    </section>
+    <br>
     <section>
       <button type="button" onclick="location.href = './estadisticasglobales.html';">ESTADÍSTICAS</button>
     </section>
@@ -41,7 +54,37 @@
     </td>
   </tr>
 </table>
-
+<div id="mySidenav" class="sidenav">
+  
+  <table style="width:100%">
+    <tr>
+      <td style="border-top:1px solid #808080;border-collapse: collapse;width: 100%;">
+        <input type="button" class="button_sidemenu"  onclick="location.href ='./configuracion.html';" value="CONFIGURACIÓN" />
+      </td>     
+    </tr>
+    <tr>
+      <td style="border-top:1px solid #808080;border-collapse: collapse;width: 100%;">
+        <input type="button" class="button_sidemenu"  onclick="location.href = './players.html';" value="MIS JUGADORES/AS" />
+      </td>     
+    </tr>
+    <tr>
+      <td style="border-top:1px solid #808080;border-collapse: collapse;width: 100%;">
+        <input type="button" class="button_sidemenu"  onclick="location.href = './estadisticasglobales.html';" value="ESTADÍSTICAS" />
+      </td>     
+    </tr>
+    <tr>
+      <td style="border-top:1px solid #808080;border-collapse: collapse;width: 100%;">
+        <input type="button" class="button_sidemenu"  onclick="location.href = './followers.html';" value="SEGUIR JUGADORES/AS" />
+      </td>     
+    </tr>
+    <tr>
+      <td style="border-top:1px solid #808080;border-bottom:1px solid #808080;;border-collapse: collapse;width: 100%;">
+        <input type="button" class="button_sidemenu"  onclick="location.href = './crearpartido.html';" value="CREAR PARTIDO" />
+      </td>     
+    </tr>
+  </table>
+ 
+</div>
 <script src="./js/index.js"></script>
 </body>
 </html>

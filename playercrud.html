@@ -11,13 +11,13 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
 <div class="header_class">
-  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./players.html"><img class="imgIcono2" src="./images/volver-gris.png"></a>
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./players.html"><img class="imgIcono" style="float:right;cursor:pointer" src="./images/volver-gris.png"></a>
 </div>
 <br>
 
 <table>
   <tr>
-    <td id="titulo" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254)">
+    <td id="titulo" colspan="2" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254)">
       Alta de jugador/a
     </td>
   </tr>
@@ -38,7 +38,7 @@
     <td>Genero</td>
     <td style="text-align:left;"">
            
-      <select class="input_dark" style="width: 100%;" id="fgenero" name="fgenero">
+      <select class="input_dark_select" style="width: 100%;" id="fgenero" name="fgenero">
         <option value="femenino">Femenino</option>
         <option value="masculino">Masculino</option>        
       </select>
@@ -98,11 +98,11 @@
         Estás seguro de borrar?
         <br>Borrarás también todos sus partidos
       </p>
-      <table>          
+      <table style="width: 100%;">          
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr>
-          <td style="border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="deleteplayer()" value="Si" /></td>
-          <td style="border-top:1px solid #808080; border-left: 1px solid #808080;border-collapse: collapse;"><input id="btnsave" type="button" class="button_modal_resultado"  onclick="cerrarModal()" value="No"/></td>
+          <td style="width: 50%;border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="deleteplayer()" value="Si" /></td>
+          <td style="width: 50%;border-top:1px solid #808080; border-left: 1px solid #808080;border-collapse: collapse;"><input id="btnsave" type="button" class="button_modal_resultado"  onclick="cerrarModal()" value="No"/></td>
         </tr>
       </table>
   </div>

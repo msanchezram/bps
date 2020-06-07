@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>.:B-P-S:.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./css/style_dark.css">  
+<link rel="stylesheet" href="./css/toggle.css">  
+</head>
+<body class="body1" onload="carga()">
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
+<div class="header_class">
+  <img class="imgIcono" src="./images/wbna-logo.ico">&nbsp;bps&nbsp;<a href="./followers.html"><img class="imgIcono" style="float:right;cursor:pointer" src="./images/volver-gris.png"></a>
+</div>
+
+<button class="accordion" id="botonacordeon">Buscar jugador/a filtros...<img class="imgIcono2" style="float:right;cursor:pointer" src="./images/menu.png"></button>
+<div class="panelacordeon" id="panelacordeon">
+  <hr></hr>
+  <table>
+    <tr>
+      <td>Mail de usuario/a</td>
+      <td style="text-align:left"><input type="text" class="input_dark" id="fmailuser" name="fmailuser" placeholder="mail del usuario/a ..."></td>
+    </tr>
+    <tr>
+    <tr>
+      <td>Nombre</td>
+      <td style="text-align:left"><input type="text" class="input_dark" id="fnombre" name="fnombre" placeholder="nombre del jugador/a ..."></td>
+    </tr>
+    <tr>
+      <td>Temporada</td>
+      <td style="text-align:left"><input type="text" class="input_dark" id="ftemporada" name="ftemporada" placeholder="AAAA/AA"></td>
+    </tr>
+    <tr>
+      <td>Equipo</td>
+      <td style="text-align:left"><input type="text" class="input_dark" id="fequipo" name="fequipo" placeholder="equipo en el que juega ..."></td>
+    </tr>
+    <tr>
+      <td>Categoría</td>
+      <td style="text-align:left"><input type="text" class="input_dark"  id="fcategoria" name="fcategoria" placeholder="categoria del jugador/a (senior, junior)..."></td>
+    </tr>
+    <tr>
+      <td>Genero</td>
+      <td style="text-align:left;"">
+             
+        <select class="input_dark_select" style="width: 100%;" id="fgenero" name="fgenero">
+          <option value="femenino">Femenino</option>
+          <option value="masculino">Masculino</option>        
+        </select>      
+      </td>
+    </tr>
+    <tr><td colspan="2"><input type="button" id="btnbuscar" class="button_modal_resultado" onclick="searchPlayers()"  value="Buscar" disabled /></td></tr>
+  </table>  
+</div>
+<hr></hr>
+
+<table class="table_dark" id="tablefollowedplayers">
+  <!--
+  <tr>
+    <td>
+      <a href="javascript:alert('Seguimos a este/a');">
+      <table class="table_test">
+        <tr><td><font style="font-weight: bold;font-size:24px;color: #41cbfe;">Paula</font></td></tr>
+        <tr><td><font style='font-size:14px;color: #FFFFFF'>Joventut Les Corts 2020/21</font></td></tr>
+        <tr><td><font style="font-size:14px;">Cadete B</font>&nbsp;<font style='font-size:12px;'>(activo)</font></td></tr>
+      </table>   
+      </a>   
+    </td>
+  </tr>
+  -->
+</table>
+<!--
+<br><br>
+<table style="width: 100%;">
+  <tr id="tr-modif">
+    <td style="width: 50%;">
+      <input type="button" class="buttoncrono" style="font-size: 20px;" id="myBtnFin"  onclick="modificaDatosPartido()" value="BORRAR" />      
+    </td>
+    <td style="width: 50%;">
+      <input type="button" class="buttoncrono" style="font-size: 20px;" id="acc"  onclick="savedatos()""  value="ACEPTAR" />
+    </td>
+  </tr>
+  <tr id="tr-alta">
+    <td colspan="2">
+      <input type="button" class="buttoncrono" style="font-size: 20px;" id="acc"  onclick="savedatos()""  value="ACEPTAR" />
+    </td>
+  </tr>
+</table>
+-->
+
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span> 
+      <p style="color:#41cbfe;padding: 10px;">Seguir jugador/a</p> 
+      <hr style="border: 1px solid #41cbfe;"></hr>
+      <p id="msgFollow" style="color:#FFFFFF;padding: 10px;">
+        Estás seguro de seguir al jugador/a?       
+      </p>
+      <table style="width: 100%;">          
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr>
+          <td style="width: 50%;border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="follow()" value="Si" /></td>
+          <td style="width: 50%;border-top:1px solid #808080; border-left: 1px solid #808080;border-collapse: collapse;"><input id="btnsave" type="button" class="button_modal_resultado"  onclick="cerrarModal()" value="No"/></td>
+        </tr>
+      </table>
+  </div>
+</div>
+<div id="snackbar" style="background-color:rgb(86, 86, 86)">...</div>
+<script src="./js/util.js"></script>
+<script src="./js/firebase.js"></script>
+<script src="./js/searchfollower.js"></script>
+</body>
+</html>
