@@ -191,27 +191,36 @@ function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     linea="<td>";
     linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
     linea+="<table class='table_test'>";
-    linea+="<tr><td  colspan='8' width='91%'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
+    //linea+="<tr><td  colspan='8' width='91%'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
+    linea+="<tr><td  colspan='9'<font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
     if(!(puntuacionEquipo == 0 && puntuacionRival ==0)){            
         linea+="&nbsp;<font style='font-size:18px;'>"+puntuacionEquipo+"-"+puntuacionRival+"</font>";        
     }        
     if (puntuacionEquipo > puntuacionRival){ //en caso que haya un resultado se muestra
         linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/win.png'>";
     }    
-    if (publicado==1){
-        linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/publicado.png'>";
-    }
+    //linea+="<span style='float:right;cursor:pointer'>";
     if (likes > 0){
-        linea+="<td width='9%'><span style='width:100%;text-align:right;color:#41cbfe;font-size:14px;font-weight: bold;'>"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;' src='./images/like-on.png'/></span></td>";
-    }else{
-        linea+="<td width='1%'>&nbsp</td>";
+        linea+="<font style='color:#41cbfe;font-size:14px;font-weight: bold;float:right;cursor:pointer'>"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;float:right;cursor:pointer' src='./images/like-on.png'/></font>";
     }
+    if (publicado==1){
+        linea+="<img id='cr' class='imgIcono4' style='float:right;cursor:pointer' src='./images/publicado.png'>";
+    }
+    //if (likes > 0){
+    //    linea+="<td width='9%'><span style='width:100%;text-align:right;color:#41cbfe;font-size:14px;font-weight: bold;'>"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;' src='./images/like-on.png'/></span></td>";
+    //}else{
+    //    linea+="<td width='1%'>&nbsp</td>";
+    //}
+    //linea+="</span>";
     linea+="</td></tr>";
     if (all){
+        //linea+="<tr><td colspan='9'><font style='font-size:16px;color:#FFFFFF'>"+nombre+" - "+categoria+"</font></td></tr>";
         linea+="<tr><td colspan='9'><font style='font-size:16px;color:#FFFFFF'>"+nombre+" - "+categoria+"</font></td></tr>";
     }
-    linea+="</table>";
-    linea+="<table class='table_test'>"
+    
+    //linea+="</td></tr>";
+    //linea+="</table>";
+    //linea+="<table class='table_test'>"
     linea+="<tr><td>"+fecha+"</td><td>tir</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+tiros+"</td>";
     linea+="<td>pts</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+puntos+"</td>";
     linea+="<td>asi</td><td style='font-weight: bold;font-size:14px;color: #FFFFFF;'>"+asistencias+"</td>";

@@ -3,6 +3,10 @@ var datosLineaFollowed;
 var datosLinea
 var publicado;
 
+//charts
+var enti=0,enta=0, t1i=0,t1a=0, t2i=0,t2a=0, t3i=0,t3a=0;
+var asi=0,reb=0,fc=0,fp=0,tf=0,tc=0,per=0,rec=0;
+
 function carga(){
     var arr;
     var lineselected;
@@ -148,7 +152,16 @@ function datosPartido(datosLinea){
     //tapones en contra
     printarDatosAccionesPartido('tapc',datosLinea,70);
     
+    //llamada al chart
+    //enti=0,enta=0, t1i=0,t1a=0, t2i=0,t2a=0, t3i=0,t3a=0
+    //asi=0,reb=0,fc=0,fp=0,tf=0,tc=0,per=0,rec=0;
+    //google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart(asi,reb,fc,fp,tf,tc,per,rec));
+   
+
     printarValoraciones(datosLinea);
+    
+    google.charts.setOnLoadCallback(drawAnnotations(enti,enta, t1i,t1a, t2i,t2a, t3i,t3a));
 }
 
 function printDatosPuntosPartido(tipoTiro,datosLinea,posInicio,factormultiplicador){
@@ -164,6 +177,21 @@ function printDatosPuntosPartido(tipoTiro,datosLinea,posInicio,factormultiplicad
     }
     document.getElementById(tipoTiro+"-total").innerHTML=aciertos+"/"+intentos;
     document.getElementById(tipoTiro+"-puntos").innerHTML=aciertos*factormultiplicador; 
+
+    //informamos las variables que después irán a los gráficos
+    switch (tipoTiro) {
+        case 't1': t1a=aciertos;t1i=intentos;
+            break;
+        case 't2':t2a=aciertos;t2i=intentos;
+            break;
+        case 't3':t3a=aciertos;t3i=intentos;
+            break;
+        case 'te':enta=aciertos;enti=intentos;
+            //console.log("enta-"+enta+" enti-"+enti);
+            break;
+        default:
+    }
+
     if (intentos==0)intentos=1;
     var porcentaje = aciertos*100/intentos;
     document.getElementById(tipoTiro+"-porcentaje").innerHTML=Math.round(porcentaje);
@@ -180,6 +208,28 @@ function printarDatosAccionesPartido(accion,datosLinea,posInicio){
         document.getElementById(accion+"-"+(x-posInicio+1)).innerHTML=datosLinea[x];
     }
     document.getElementById(accion+"-total").innerHTML=total;
+    
+    //actualizamos los valores globales de las graficas
+    switch (accion) {
+        case 'frea': fp=total;
+            break;
+        case 'frec': fc=total;
+            break;
+        case 'asi': asi=total;
+            break;
+        case 'tap': tf=total;
+            break;
+        case 'reo': reb=total;
+            break;
+        case 'bap': per=total;
+            break;
+        case 'bar': rec=total;
+            break;
+        case 'tapc': tc=total;
+            break;
+        
+        default:
+    }
 }
 
 function printarValoraciones(datosLinea){
