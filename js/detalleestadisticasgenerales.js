@@ -108,12 +108,12 @@ function datosPartido(datosLinea, partidosjugados,prefijo){
     document.getElementById(prefijo+"t3-puntos").innerHTML=totalpuntose;
 
     var totalpuntos=totalpuntos1+totalpuntos2+totalpuntos3+totalpuntose;
-    if (totalpuntos-parseInt(totalpuntos)>0){
+    //if (totalpuntos-parseInt(totalpuntos)>0){
         //console.log(totalpuntos);
-        totalpuntos=totalpuntos.toFixed(2);
+    //    totalpuntos=totalpuntos.toFixed(2);
         //console.log(totalpuntos);
-    }
-    document.getElementById(prefijo+"puntos").innerHTML=totalpuntos;
+    //}
+    document.getElementById(prefijo+"puntos").innerHTML=getNumeroDecimal(totalpuntos,2);
     
     //faltas realizadas
     printarDatosAccionesPartido(prefijo+'frea',datosLinea,38,partidosjugados);
@@ -165,28 +165,29 @@ function printDatosPuntosPartido(tipoTiro,datosLinea,posInicio,factormultiplicad
         intentos+=valorintentos;//Number(datosLinea[posInicio+4]);
         //printamos aciertos e intentos
 
-        if (valoraciertos-parseInt(valoraciertos)>0){
-            valoraciertos=valoraciertos.toPrecision(1);
-        }
-        if (valorintentos-parseInt(valorintentos)>0){
-            valorintentos=valorintentos.toPrecision(1);
-        }
+        //if (valoraciertos-parseInt(valoraciertos)>0){
+        //    valoraciertos=valoraciertos.toPrecision(1);
+        //}
+        //if (valorintentos-parseInt(valorintentos)>0){
+        //    valorintentos=valorintentos.toPrecision(1);
+        //}
         
-        document.getElementById(label+i).innerHTML=valoraciertos+"/"+valorintentos;
+        document.getElementById(label+i).innerHTML=getNumeroDecimal(valoraciertos,precision)+"/"+getNumeroDecimal(valorintentos,precision);
         posInicio++;
     }
     if (partidosjugados>1){
         precision=2;
     }
     //console.log(intentos);
-    if (aciertos-parseInt(aciertos)>0){
-        aciertos=aciertos.toPrecision(precision);
-    }
-    if (intentos-parseInt(intentos)>0){
-        intentos=intentos.toPrecision(precision);
-    }
-    document.getElementById(tipoTiro+"-total").innerHTML=aciertos+"/"+intentos;
-    document.getElementById(tipoTiro+"-puntos").innerHTML=aciertos*factormultiplicador; 
+    //aciertos=getNumeroDecimal(aciertos);
+    //if (aciertos-parseInt(aciertos)>0){
+    //    aciertos=aciertos.toPrecision(precision);
+    //}
+    //if (intentos-parseInt(intentos)>0){
+    //    intentos=intentos.toPrecision(precision);
+    //}
+    document.getElementById(tipoTiro+"-total").innerHTML=getNumeroDecimal(aciertos,precision)+"/"+getNumeroDecimal(intentos,precision);
+    document.getElementById(tipoTiro+"-puntos").innerHTML=getNumeroDecimal(aciertos,precision)*factormultiplicador; 
 
     if (partidosjugados==1){ //este grafico es solo para valores globales
         //informamos las variables que después irán a los gráficos
@@ -208,7 +209,7 @@ function printDatosPuntosPartido(tipoTiro,datosLinea,posInicio,factormultiplicad
     document.getElementById(tipoTiro+"-porcentaje").innerHTML=Math.round(porcentaje);
     
     //retornamos el total de puntos
-    return aciertos*factormultiplicador;
+    return getNumeroDecimal(aciertos,precision)*factormultiplicador;
 }
 
 function printarDatosAccionesPartido(accion,datosLinea,posInicio, partidosjugados){
@@ -225,11 +226,11 @@ function printarDatosAccionesPartido(accion,datosLinea,posInicio, partidosjugado
         precision=2;
     }
     //evitamos notaciones científicas (e)
-    if (total-parseInt(total)>0){
-        total=total.toFixed(precision);
-    }
+    //if (total-parseInt(total)>0){
+    //    total=total.toFixed(precision);
+    //}
 
-    document.getElementById(accion+"-total").innerHTML=total;
+    document.getElementById(accion+"-total").innerHTML=getNumeroDecimal(total,precision);
     
     if (partidosjugados==1){
         //actualizamos los valores globales de las graficas
@@ -262,18 +263,18 @@ function printarValoraciones(datosLinea, partidosjugados){
     var valor=0;
     valor = getValoracion(1, datosLinea)/partidosjugados;
     valorTotal+=valor;
-    document.getElementById("val-1").innerHTML=valor.toPrecision(1);
+    document.getElementById("val-1").innerHTML=getNumeroDecimal(valor,2);
     valor = getValoracion(2, datosLinea)/partidosjugados;
     valorTotal+=valor;
-    document.getElementById("val-2").innerHTML=valor.toPrecision(1);
+    document.getElementById("val-2").innerHTML=getNumeroDecimal(valor,2);
     valor = getValoracion(3, datosLinea)/partidosjugados;
     valorTotal+=valor;
-    document.getElementById("val-3").innerHTML=valor.toPrecision(1);
+    document.getElementById("val-3").innerHTML=getNumeroDecimal(valor,2);
     valor = getValoracion(4, datosLinea)/partidosjugados;
     valorTotal+=valor;
-    document.getElementById("val-4").innerHTML=valor.toPrecision(1);
+    document.getElementById("val-4").innerHTML=getNumeroDecimal(valor,2);
 
-    document.getElementById("val-total").innerHTML=valorTotal.toPrecision(2);
+    document.getElementById("val-total").innerHTML=getNumeroDecimal(valorTotal,2);
 }
 
 function getValoracion(periodo, datosLinea){

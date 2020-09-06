@@ -22,6 +22,7 @@ function carga(){
              //si veníamos de followers cambiamos el titulo
              var playerfollowed=idplayerfollow.split(separador);
              document.getElementById("titulo").innerHTML="Partidos publicados de "+playerfollowed[1]+" <img id='cargando' class='imgIcono4' style='float:right;cursor:pointer' src='./images/loading.gif' >";
+             max=10000000; //informamos este dato porque más tarde nos interesará que muestre la fila de estadísticas generales
          }else{
             window.sessionStorage.followpartidosFromIndex=true;
             console.log(window.sessionStorage.followpartidosFromIndex);

@@ -281,3 +281,10 @@ function getTodayFechaParseada(){
     }
     return dia+"/"+mes+"/"+d.getFullYear();
 }
+
+function getNumeroDecimal(numero, precision){
+    if (numero-parseInt(numero)>0){
+        return numero.toPrecision(precision);
+    }
+    return numero;
+}
