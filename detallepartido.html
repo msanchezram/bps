@@ -214,12 +214,19 @@
     <tr><td colspan="8" class="border"><div id="piechart"></div></td></tr>
 
     <tr><td colspan="8">&nbsp;</td></tr>
-    <tr><td colspan="4" style="width: 50%;">
-      <input type="button" id="myBtnFin" class="buttoncrono"   value="BORRAR" />
-    </td>
-    <td colspan="4" style="width: 50%;">
-      <input type="button" id="myBtnPub" class="buttoncrono" onclick="publicarPartido()"  value="PUBLICAR" />
-    </td>
+    <tr id="tr-pub" style="visibility: hidden;">
+      <td colspan="4" style="width: 50%;" id="tdborrar">
+      <input type="button" id="myBtnFin" class="buttoncrono" value="BORRAR" />
+      </td>
+      <td colspan="4" style="width: 50%;" id="tdpublicar">
+        <input type="button" id="myBtnPub" class="buttoncrono" onclick="publicarPartido()"  value="PUBLICAR" />
+      </td>
+    </tr>
+    <tr id="tr-del"  style="visibility: hidden;">
+      <td colspan="8"  id="tdborrar">
+        <input type="button" id="myBtnFin2" class="buttoncrono" value="BORRAR" />
+      </td>
+    </tr>
   </tr>
   </table>
   

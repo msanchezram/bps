@@ -17,21 +17,23 @@
 <table>
   <tr>
     <td id="titulo" style="text-align:left;font-size: 20px;color: rgb(65, 203, 254)">
-      Jugadores/as que sigo
+      <!--
+        Mis Seguidores/as <img id="cargando" class='imgIcono4' style='float:right;cursor:pointer' src='./images/loading.gif' >
+      -->
     </td>
   </tr>
-  <tr><td><hr></hr></td></tr>
+  <tr><td><hr></htr></td></tr>
 </table>
  
-  <table class="table_dark" id="tablefollowedplayers">
+  <table class="table_dark" id="tablefollowers">
     <!--
     <tr>
       <td>
         <a href="javascript:alert('Test');">
         <table class="table_test">
-          <tr><td><font style="font-weight: bold;font-size:24px;color: #41cbfe;">Paula</font></td></tr>
-          <tr><td><font style='font-size:14px;color: #FFFFFF'>Joventut Les Corts 2020/21</font></td></tr>
-          <tr><td><font style="font-size:14px;">Cadete B</font>&nbsp;<font style='font-size:12px;'>(activo)</font></td></tr>
+          <tr><td><font style="font-weight: bold;font-size:24px;color: #FFFFFF;">Paula</font></td></tr>
+          <tr><td>Joventut Les Corts 2020/21</td></tr>
+          <tr><td><font style="font-size:14px;">Cadete B Nivel B</font></td></tr>
         </table>   
         </a>   
       </td>
@@ -39,30 +41,27 @@
 -->
   </table>
    
+  
   <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close">&times;</span> 
-        <p style="color:#41cbfe;padding: 10px;">Dejar de seguir jugador/a</p> 
+        <p style="color:#41cbfe;padding: 10px;">Borrar partido</p> 
         <hr style="border: 1px solid #41cbfe;"></hr>
-        <p id="msgFollow" style="color:#FFFFFF;padding: 10px;">
-          Estás seguro de dejar de seguir al/la jugador/a?       
-        </p>
+        <p id="titulo-modal" style="color:#FFFFFF;padding: 10px;">X?        
         <table style="width: 100%;">          
           <tr><td colspan="2">&nbsp;</td></tr>
           <tr>
-            <td style="width: 50%;border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="deletefollow()" value="Si" /></td>
+            <td style="width: 50%;border-top:1px solid #808080;border-right: 1px solid #808080;border-collapse: collapse;"><input type="button" class="button_modal_resultado"  onclick="aceptar()" value="Si" /></td>
             <td style="width: 50%;border-top:1px solid #808080; border-left: 1px solid #808080;border-collapse: collapse;"><input id="btnsave" type="button" class="button_modal_resultado"  onclick="cerrarModal()" value="No"/></td>
           </tr>
         </table>
     </div>
   </div>
   <div id="snackbar" style="background-color:rgb(86, 86, 86)">...</div>
-  <div class="fixed">
-    <button class="button_round_dark" onclick="createfollowed()"><b>+</b></button>&nbsp;&nbsp;
-  </div>
+
   <script src="./js/util.js"></script>
   <script src="./js/firebase.js"></script>
-<script src="./js/followers.js"></script>
+<script src="./js/verfollowers.js"></script>
 </body>
 </html>
