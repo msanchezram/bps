@@ -578,7 +578,7 @@ function agregarLikePartidoFB(idpartido){
     });    
 }
 
-function agregarLikeSeguidoPartidoFB(idseguidosregistro){
+function agregarLikeSeguidoPartidoFB(idseguidosregistro,fecha, apodofollow){
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
@@ -586,7 +586,9 @@ function agregarLikeSeguidoPartidoFB(idseguidosregistro){
     var updatelikeseguidospartidoref = firebase.database().ref("seguidosregistros/"+idseguidosregistro);
 
     updatelikeseguidospartidoref.update({
-        like: 1
+        like: 1,
+        fechafollow: fecha,
+        apodofollower : apodofollow
     });
 
     console.log("likes en seguidos hecho");

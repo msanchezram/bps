@@ -60,6 +60,7 @@ function filtrarInformacion(arrpartidosseguidos){
 function cargarTablaFollowers(followers){
     var obj;
     var linea="";
+    var row;
     //var estado="";
 
     //limpiar tabla de resultados util.js
@@ -73,33 +74,52 @@ function cargarTablaFollowers(followers){
         var optionver=window.localStorage.veropcionfollowersplayer;
         
         for (var i=0;i<followers.length;i++){
-            //mostrarToast(players[i].nombre, 1000);
+            console.log(followers[i]);
             obj=followers[i];
+            if (optionver=="L" ){
+                if ( followers[i].like ==1){
+                    linea="<td>";
+                    //linea+="<a href='javascript:editplayer("+i+");'>";
+                    linea+="<table class='table_test'>";
+                    linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.apodofollower+"</font>";   
+    
+                    linea+="</td></tr>";
+                    //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font> <span  style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:16px;font-weight: bold;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span></td></tr>";
+                    linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.fechafollow+"</font></td></tr>";
+                    //linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
+                    linea+="</table>";
+                    //linea+="</a>";
+                    linea+="</td>";
+                    row = document.getElementById("tablefollowers").insertRow(0);
+                    row.innerHTML = linea;
+                }
+                
 
-            console.log("super->"+obj.super);
-            //console.log(obj.nombre);
-            linea="<td>";
-            //linea+="<a href='javascript:editplayer("+i+");'>";
-            linea+="<table class='table_test'>";
-            linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.apodofollower+"</font>";   
-            if (optionver!="L"){
+            } else{
+
+                linea="<td>";
+                //linea+="<a href='javascript:editplayer("+i+");'>";
+                linea+="<table class='table_test'>";
+                linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.apodofollower+"</font>";   
+               
                 linea+="<a href=\"javascript:putstar('"+obj.idusuario+"',"+obj.super+",'"+obj.apodofollower+"','"+obj.idfollowed+"')\">"
                 linea+="<img id='verall' class='imgIcono4' style='float:right;cursor:pointer' src='./images/estrella";
                 if (obj.super==0){ //si no es estrella le ponemos el sufijo de gris a la imagen
-                     linea+="-gris";
+                        linea+="-gris";
                 }
                 linea+=".png'>";
-                linea+="</a>";
+                linea+="</a>";   
+                row = document.getElementById("tablefollowers").insertRow(0);
+                row.innerHTML = linea;             
             }
-            linea+="</td></tr>";
-            //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font> <span  style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:16px;font-weight: bold;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span></td></tr>";
-            linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.fechafollow+"</font></td></tr>";
-            //linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
-            linea+="</table>";
-            //linea+="</a>";
-            linea+="</td>";
-            var row = document.getElementById("tablefollowers").insertRow(0);
-            row.innerHTML = linea;  
+           
+            //mostrarToast(players[i].nombre, 1000);
+            
+
+            //console.log("super->"+obj.super);
+            //console.log(obj.nombre);
+            
+              
         }
     }
 }

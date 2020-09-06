@@ -264,3 +264,20 @@ function numberToString(num)
 
     return numStr;
 }
+
+function getTodayFechaParseada(){
+    var d = new Date();
+    var dia="0";
+    var mes ="0";
+    if (d.getDate()<10){
+        dia+=d.getDate();
+    }else{
+        dia=d.getDate();
+    }
+    if (d.getMonth()<9){
+        mes+=d.getMonth()+1;
+    }else{
+        mes=d.getMonth()+1;
+    }
+    return dia+"/"+mes+"/"+d.getFullYear();
+}

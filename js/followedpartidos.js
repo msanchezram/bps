@@ -225,13 +225,15 @@ function gotoestadisticasgenerales(idplayer){
 }
 
 function putLikeFollowedPartidoSelected(lineselected, idpartido, idseguidosregistro){
-//añadir like al partido seleccionado
+    //añadir like al partido seleccionado
     console.log("idpartido "+idpartido);
     console.log("idseguidosregistro "+idseguidosregistro);
     //alert("Like partido ->"+lineselected);
     //var partido = cargaPartidoByKeyFB(idpartido);
     agregarLikePartidoFB(idpartido);
-    agregarLikeSeguidoPartidoFB(idseguidosregistro);
+    var fecha=getTodayFechaParseada();
+    var apodofollow = window.localStorage.apodo;
+    agregarLikeSeguidoPartidoFB(idseguidosregistro, fecha, apodofollow);
 
     document.getElementById("like-"+lineselected).src="./images/like-on.png";    
     document.getElementById("link-"+lineselected).removeAttribute("href"); 
