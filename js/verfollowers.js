@@ -74,7 +74,7 @@ function cargarTablaFollowers(followers){
         var optionver=window.localStorage.veropcionfollowersplayer;
         
         for (var i=0;i<followers.length;i++){
-            console.log(followers[i]);
+            //console.log(followers[i]);
             obj=followers[i];
             if (optionver=="L" ){
                 if ( followers[i].like ==1){
@@ -108,6 +108,13 @@ function cargarTablaFollowers(followers){
                         linea+="-gris";
                 }
                 linea+=".png'>";
+                linea+="</td></tr>";
+                
+                linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.fechafollow+"</font></td></tr>";
+                //linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
+                linea+="</table>";
+                //linea+="</a>";
+                linea+="</td>";
                 linea+="</a>";   
                 row = document.getElementById("tablefollowers").insertRow(0);
                 row.innerHTML = linea;             
