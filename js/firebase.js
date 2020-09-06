@@ -10,7 +10,7 @@ var firebaseConfig = {
   // Initialize Firebase
   //firebase.initializeApp(firebaseConfig);
 
-  function saveUserFB(mail, fnac){
+  function saveUserFB(mail, fnac, apodo){
     if (!firebase.apps.length) {
         //ver si está inicializado
         //console.log("inicializo");
@@ -20,7 +20,8 @@ var firebaseConfig = {
 
     matchsref.push ({
         mail: mail,
-        fechanacimiento: fnac
+        fechanacimiento: fnac,
+        apodo : apodo
     });
     //console.log("fin del push")
 
@@ -30,7 +31,7 @@ var firebaseConfig = {
     //alert('Datos guardados')
   }
 
-  function loadUserFB(mail, fnac, altausuario){
+  function loadUserFB(mail, fnac, altausuario,apodo){
     if (!firebase.apps.length) {
         //ver si está inicializado
         //console.log("inicializo");
@@ -39,6 +40,7 @@ var firebaseConfig = {
     var usersref = firebase.database().ref("usuarios");
     //var tmpmail="";
     var tmpfechanac="";
+    var tmpapodo="";
     var clave="";
     var count=0;
     
@@ -46,7 +48,7 @@ var firebaseConfig = {
         count++;
         //console.log("Equal to filter: " + data.val().mail+" - "+data.val().fechanacimiento+"-"+data.key);
         tmpfechanac=data.val().fechanacimiento;
-
+        tmpapodo=data.val().apodo;
         if (tmpfechanac==fnac){
             //usuario encontrado, guardamos su key
             clave=data.key;                
@@ -56,7 +58,8 @@ var firebaseConfig = {
         if (clave.length>0){
             //tenemos usuario
             console.log("vamos a buscar jugadores");
-            window.localStorage.clave=clave;             
+            window.localStorage.clave=clave;   
+            window.localStorage.apodo=tmpapodo;
 
         }else{
             mostrarToast("usuario "+mail+" con fecha nacimiento "+fnac+" no existe!",3000);
@@ -70,7 +73,7 @@ var firebaseConfig = {
         if (altausuario && count==0){
             //console.log("alta de usuario");
             //si es un alta lo agregamos
-            saveUserFB(mail, fnac);            
+            saveUserFB(mail, fnac, apodo);            
         } else if (altausuario && count>0){
             //error el usuario ya existe
             mostrarToast("error en el alta, el usuario "+mail+" ya existe!",3000);
@@ -253,7 +256,7 @@ function savePlayerFB(player){
         partidosref.once("value",function(snap2){
             //window.localStorage.playerpartidos=JSON.stringify(arrpartidos);   
             //console.log("llamar printInformacion");  
-            retCargaPartidosPorAtributo(arrpartidos); //metodo de estadisticasglobales.js 
+            retCargaPartidosPorAtributo(arrpartidos); //metodo de estadisticasglobales.js y de followedpartidos
             //printInformacion(arrpartidos, ";", all);   //metodo de estadisticasglobales.js        
             //console.log("fin partidosref"); 
         });
@@ -381,6 +384,10 @@ function seguidosregistrosDTO(obj){
 
     seguidosregistro.idusuario=obj.val().idusuario;
     seguidosregistro.like=obj.val().like;
+
+    seguidosregistro.apodofollower=obj.val().apodofollower;
+    seguidosregistro.fechafollow=obj.val().fechafollow;
+
     seguidosregistro.idseguidosregistro=obj.key;
        
     return seguidosregistro;
@@ -585,7 +592,7 @@ function agregarLikeSeguidoPartidoFB(idseguidosregistro){
     console.log("likes en seguidos hecho");
 }
 
-function loadFollowedPlayersFB(idusuario, retorno){
+function loadFollowedPlayersFB(idusuario, retorno, atributobusqueda){
     if (!firebase.apps.length) {                
         firebase.initializeApp(firebaseConfig);
     } 
@@ -596,7 +603,7 @@ function loadFollowedPlayersFB(idusuario, retorno){
     var arrfollowedplayers = [];
     var followedplayers = firebase.database().ref("followed");
     //var total=0;
-    followedplayers.orderByChild("idusuario").equalTo(idusuario).on("child_added", function(data2) {
+    followedplayers.orderByChild(atributobusqueda).equalTo(idusuario).on("child_added", function(data2) {
         //followed=followedDTO(data2);            
         //arrfollowed.push(followed);
         //playerfollowed=followedDTO(data2);
@@ -609,11 +616,14 @@ function loadFollowedPlayersFB(idusuario, retorno){
         //window.localStorage.players=JSON.stringify(arrplayers);  
         //console.log("partido followed guardado");
         //if(total>0){  
-        window.sessionStorage.followedplayers=JSON.stringify(arrfollowedplayers);       
+             
         if (arrfollowedplayers.length>0){
            
             if (retorno=="./followers.html"){
+                window.sessionStorage.followedplayers=JSON.stringify(arrfollowedplayers);  
                 cargarTablaPlayers(arrfollowedplayers,"unfollow.png", "unfollow");  
+            }else if (retorno=="./verfollowers.html"){
+                cargarTablaFollowers(arrfollowedplayers);  
             }
         }else{
             mostrarToast("no sigues a nadie :(",3000);    
@@ -630,6 +640,14 @@ function followedDTO(obj){
     followed.idusuario=obj.val().idusuario;    
     followed.nombre=obj.val().nombre;   
     followed.temporada=obj.val().temporada;  
+    followed.apodofollower=obj.val().apodofollower;
+    followed.fechafollow=obj.val().fechafollow;
+    //si existe el registro mapeamos
+    if (obj.val().super !=null){
+        followed.super=obj.val().super;
+    }else{//en caso que no, lo ponemos a 0
+        followed.super=0;
+    }
     followed.idfollowed=obj.key;
        
     return followed;
@@ -671,10 +689,9 @@ function saveFollowedFB(playerfollow){
     if (!firebase.apps.length) {                
         firebase.initializeApp(firebaseConfig);
     }
-
     
     var playerfollowref = firebase.database().ref("followed");
-    console.log("guardamos partido");
+    //console.log("guardamos follower");
     var resul=playerfollowref.push ({
 
         categoria:playerfollow.categoria,
@@ -682,8 +699,9 @@ function saveFollowedFB(playerfollow){
         idplayer:playerfollow.idplayer,
         idusuario:playerfollow.idusuario,
         nombre:playerfollow.nombre,
-        temporada:playerfollow.temporada
-
+        temporada:playerfollow.temporada,
+        apodofollower:playerfollow.apodofollower,
+        fechafollow:playerfollow.fechafollow
     }).key;    
 
     return  resul;
@@ -758,6 +776,17 @@ function unfollowplayerFB(idfollowed, idplayeridusuario){
 
 }
 
+function updateSuperFollowedFB(idfollowed, superfollower){
+    if (!firebase.apps.length) {                
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    var playerfollowref = firebase.database().ref("followed/"+idfollowed);
+
+    playerfollowref.update({
+        super: superfollower
+    });
+}
 /*
 function getPartidosByPlayerFB(idplayer, idusuario){
 

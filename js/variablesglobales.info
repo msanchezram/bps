@@ -2,6 +2,7 @@ window.localStorage.clave//guarda la clave de usuario en firebase
 window.localStorage.players //guarda la array de jugadores del usuario
 window.localStorage.mail //guarda el mail del usuario
 window.localStorage.fnac //guarda la fecha de nacimiento del usuario
+window.localStorage.apodo //apodo del usuario 
 window.localStorage.playercrud //numero de lista del jugador que vamos a editar
 
 //login
@@ -31,4 +32,9 @@ window.sessionStorage.followpartidosFromIndex //esta variable nos sirve para ind
 
 //seguidos
 window.sessionStorage.followedplayers //guardamos la lista de jugadores que siguimos
+
+//verfollowers
+window.localStorage.verfollowersplayer //guardamos la posicion del player que queremos ver sus followers
+window.localStorage.veropcionfollowersplayer //indicador que nos dice si venimos de Likes (L) o de Followers
+window.localStorage.verLikesIdPartido //guardamos el idpartido que estamos viendo los likes hechos por los followers
 

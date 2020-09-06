@@ -37,13 +37,18 @@ function cargarTablaPlayers(players){
         }
         //console.log(obj.nombre);
         linea="<td>";
-        linea+="<a href='javascript:editplayer("+i+");'>";
-        linea+="<table class='table_test'>";
+        
+        linea+="<table class='table_test' style='width: 100%;'>";
         linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font>";
         if (obj.followers > 0){
+            linea+="<a href='javascript:verfollowersplayer("+i+");'>";
             linea+="<span style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:14px;font-weight: normal;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span>";
+            linea+="</a>";
         }
         linea+="</td></tr>";
+        linea+="</table>";
+        linea+="<a href='javascript:editplayer("+i+");'>";
+        linea+="<table class='table_test' style='width: 100%;'>";
         //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font> <span  style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:16px;font-weight: bold;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span></td></tr>";
         linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.equipo+" "+obj.temporada+"</font></td></tr>";
         linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
@@ -62,4 +67,8 @@ function editplayer(numplayer){
 function createplayer(){
     window.localStorage.removeItem("playercrud");
     window.location.href="./playercrud.html";
+}
+function verfollowersplayer(numplayer){
+    window.localStorage.verfollowersplayer=numplayer;
+    window.location.href="./verfollowers.html";
 }

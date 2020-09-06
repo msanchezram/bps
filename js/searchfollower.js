@@ -49,10 +49,10 @@ function filtrarResultadoUsuarios(arrListaUsuarios, filtrosbusqueda){
         if (arrmisfollowedplayers!=null)       {
             arrmisfollowedplayers= JSON.parse(window.sessionStorage.followedplayers);
         }else{
-
+            //si no seguimos a nadie inicializamos a 0 el array
+            arrmisfollowedplayers= [];
         }
-        arrmisfollowedplayers= [];
-
+        
         var i=0;
         console.log("accedemos arrListaUsuarios");
         for (i=0;i<arrListaUsuarios.length;i++){
@@ -178,15 +178,27 @@ function selectedplayer(i){
 function follow(){
     //console.log("follow ->"+selectedtofollowuser);
     //console.log(arrplayers[selectedtofollowuser]);
-
+    var tmpFecha=new Date();
+    var tmpDia=""+tmpFecha.getDate();
+    var tmpMes=""+(tmpFecha.getMonth()+1);
+    if(tmpDia.length==1){
+        tmpDia="0"+tmpDia;
+    }
+    if(tmpMes.length==1){
+        tmpMes="0"+tmpMes;
+    }
+    
+    var tmpFechaSt=tmpDia+"/"+tmpMes+"/"+tmpFecha.getFullYear();
     //creamos el objeto a serializar
     var playerfollow = {};
     playerfollow.categoria=arrplayers[selectedtofollowuser].categoria;
     playerfollow.equipo=arrplayers[selectedtofollowuser].equipo;    
     playerfollow.idplayer=arrplayers[selectedtofollowuser].idplayer;
-    playerfollow.idusuario=window.localStorage.clave; //ponemos nuesra clave de usuario de búsqueda    
+    playerfollow.idusuario=window.localStorage.clave; //ponemos nuestra clave de usuario de búsqueda    
     playerfollow.nombre=arrplayers[selectedtofollowuser].nombre;   
     playerfollow.temporada=arrplayers[selectedtofollowuser].temporada; 
+    playerfollow.apodofollower=window.localStorage.apodo;
+    playerfollow.fechafollow=tmpFechaSt;
 
     var keyreturn = saveFollowedFB(playerfollow);
     agregarFollowerPlayerFB(arrplayers[selectedtofollowuser].idplayer);

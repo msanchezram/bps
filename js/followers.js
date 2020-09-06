@@ -3,6 +3,12 @@ var selectedtofollowed=0;
 
 function carga(){
    
+    //borramos los datos por si el usuario decide hacer un volver desde navegador y no desde
+    //el botón de atrás
+    window.sessionStorage.removeItem("seguidosidpartido");
+    window.localStorage.removeItem("seguidospartido");
+    window.sessionStorage.removeItem("idfollowed");
+
     //carga de usuarios
     var claveuser=window.localStorage.clave;
     //borramos el atributo followpartidosFromIndex ya que si lo tenemos en memoria lo borramos
@@ -20,11 +26,11 @@ function carga(){
         //window.location.href="./login.html";
         //console.log("players es null carga FB");
         mostrarToast("cargando información ...", 3000)
-        loadFollowedPlayersFB(claveuser,"./followers.html")
+        loadFollowedPlayersFB(claveuser,"./followers.html","idusuario")
         
     }else{    
         console.log("players no es null carga local");
-        players= JSON.parse(window.sessionStorage.followedplayers);
+        players= JSON.parse(players);
         //mostrarToast('Mostramos los datos', 3000);
         //var players = JSON.parse(window.localStorage.players);
         cargarTablaPlayers(players,"unfollow.png", "unfollow"); //util.js
@@ -38,6 +44,11 @@ function unfollow(numplayer){
     document.getElementById("msgFollow").innerHTML= "Seguro que quieres dejar de seguir a "+playersfollowed[numplayer].nombre+" del "+playersfollowed[numplayer].categoria+"?";
     selectedtofollowed=numplayer;
     modal.style.display = "block";
+}
+
+function salir (){
+    window.sessionStorage.removeItem("followedplayers");
+    window.location.href='./index.html';
 }
 function deletefollow(){
     //alert('borramos todos');
@@ -55,8 +66,10 @@ function deletefollow(){
 
 function selectedplayer(numplayer){
     //alert('editplayer');
+    
     var playersfollowed= JSON.parse(window.sessionStorage.followedplayers);
-    window.sessionStorage.idfollowed = playersfollowed[numplayer].idplayer+separador+playersfollowed[numplayer].nombre;
+    //console.log("super->"+playersfollowed[numplayer].super);
+    window.sessionStorage.idfollowed = playersfollowed[numplayer].idplayer+separador+playersfollowed[numplayer].nombre+separador+playersfollowed[numplayer].super;
     window.location.href="./followedpartidos.html";
 }
 

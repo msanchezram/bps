@@ -196,3 +196,71 @@ function limpiarTablaResultados(nombreTabla){
 function cerrarModal(){
     modal.style.display = "none";
 }
+
+function celdaCargando(nombreTabla){
+    linea="<td>";
+    //linea+="<a href='javascript:editplayer("+i+");'>";
+    linea+="<table class='table_test'>";
+
+    linea+="<tr><td><font style='font-weight: bold;font-size:16px;color: rgb(65, 203, 254)'>Cargando información</font> <img class='imgIcono4' style='float:right;cursor:pointer' src='./images/loading.gif' ></td></tr>"
+
+    //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.apodofollower+"</font>";        
+    //linea+="</td></tr>";
+    //linea+="<tr><td><font style='font-weight: bold;font-size:24px;color: rgb(65, 203, 254)'>"+obj.nombre+"</font> <span  style='float:right;cursor:pointer;text-align:right;color:#FFFFFF;font-size:16px;font-weight: bold;'>"+obj.followers+"<img class='imgIcono4' style='vertical-align:bottom;' src='./images/followers.png'></span></td></tr>";
+    //linea+="<tr><td><font style='font-size:14px;color: #FFFFFF'>"+obj.fechafollow+"</font></td></tr>";
+    //linea+="<tr><td><font style='font-size:14px;'>"+obj.categoria+" Nivel "+obj.nivel+"</font><font style='font-size:12px;'> ("+estado+")</font></td></tr>";
+    linea+="</table>";
+    //linea+="</a>";
+    linea+="</td>";
+    var row = document.getElementById(nombreTabla).insertRow(0);
+    row.innerHTML = linea;  
+}
+
+function inhabilitarIconoCargando(nombre){
+    document.getElementById(nombre).style.visibility="hidden";
+}
+function habilitarIconoCargando(nombre){
+    document.getElementById(nombre).style.visibility="visible";
+}
+
+function agregarFilaEstadisticas(idplayer, nombretabla){
+    var linea="<td>";
+    linea+="<a href=\"javascript:gotoestadisticasgenerales('"+idplayer+"')\">";
+    linea+="<table class='table_test'>";
+    linea+="<tr><td style='text-align: center;'>'<font style='color:#41cbfe;'>Estadísticas generales</font></td></tr>";
+    linea+="</table>";
+    linea+="</a>";
+    linea+="</td>";
+    var row = document.getElementById(nombretabla).insertRow(0);
+    row.innerHTML = linea; 
+}
+
+function numberToString(num)
+{
+    let numStr = String(num);
+
+    if (Math.abs(num) < 1.0)
+    {
+        let e = parseInt(num.toString().split('e-')[1]);
+        if (e)
+        {
+            let negative = num < 0;
+            if (negative) num *= -1
+            num *= Math.pow(10, e - 1);
+            numStr = '0.' + (new Array(e)).join('0') + num.toString().substring(2);
+            if (negative) numStr = "-" + numStr;
+        }
+    }
+    else
+    {
+        let e = parseInt(num.toString().split('+')[1]);
+        if (e > 20)
+        {
+            e -= 20;
+            num /= Math.pow(10, e);
+            numStr = num.toString() + (new Array(e + 1)).join('0');
+        }
+    }
+
+    return numStr;
+}

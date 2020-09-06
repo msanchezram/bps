@@ -2,6 +2,7 @@ var menustate="";
 
 function carga(){
     var clave=window.localStorage.clave;
+    //document.getElementById("welcome").innerHTML="Bienvenido "+window.localStorage.apodo;
     if (!clave){
         window.location.href="./login.html";
     }

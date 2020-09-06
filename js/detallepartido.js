@@ -22,13 +22,31 @@ function carga(){
         //venimos de estadisticasglobales
         arr = JSON.parse(window.localStorage.playerpartidos);
         lineselected = window.sessionStorage.detallepartido;
-
+        //var player =window.localStorage.playerselected;
        
 
         datosLinea = arr[lineselected].registro.split(separador);
         playerdata = arr[lineselected].player;
         publicado  = arr[lineselected].publico;
+        var follow = hasFollowers();      //player.followers;
 
+        console.log("followers -> "+follow);
+        //console.log("player -> "+player);
+
+        //console.l
+        
+        if (follow==null || follow==0){
+            //document.getElementById("myBtnPub").style.display = "none";
+            //document.getElementById("tdborrar").style="width: 100%";
+            //document.getElementById("tdpublicar").style="width: 0%";
+            
+            document.getElementById("tr-pub").style.display = "none";
+            document.getElementById("tr-del").style.visibility= "visible";
+        }else{
+            document.getElementById("tr-del").style.display = "none";
+            document.getElementById("tr-pub").style.visibility= "visible";
+        }
+        
         if (publicado==1){
             document.getElementById("myBtnPub").value="DESPUBLICAR"
         }else{
@@ -54,8 +72,28 @@ function carga(){
     //console.log(arr);
     //cargaEstadisticasGlobales(arr,lineselected);
     cargarDatosPartido(datosLinea,playerdata);
-    
+}
 
+function hasFollowers(){
+
+    var players = window.localStorage.players;
+    players= JSON.parse(players);
+
+    var player =window.localStorage.playerselected;
+    //console.log("player -> "+player);
+    //console.log("players -> "+players);
+    for(var i=0; i<players.length;i++){
+        //console.log("player[i] -> "+players[i].idplayer);
+        if (players[i].idplayer ==player){
+            //console.log("player[i] -> "+players[i].idplayer);
+            if (players[i].followers != null && players[i].followers>0){
+                //console.log("player[i] -> "+players[i].followers);
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 function salir(){
@@ -311,6 +349,7 @@ var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtnFin");
+var btn2 = document.getElementById("myBtnFin2");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -319,6 +358,9 @@ var span = document.getElementsByClassName("close")[0];
 btn.onclick = function() {
   modal.style.display = "block";
 }
+btn2.onclick = function() {
+    modal.style.display = "block";
+  }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {

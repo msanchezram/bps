@@ -1,12 +1,14 @@
 var separador=";";
-
+var superfollower="";
+var arraypartidossuperfollowed=null;
+var max=25;
 
 function carga(){
     //cargalocal()
-    var max=25;
+    max=25;
     var idplayerfollow=window.sessionStorage.idfollowed;
     console.log("carga ->"+window.sessionStorage.followpartidosFromIndex);
-
+   
     if (window.sessionStorage.seguidosidpartido!=null){        
         //miramos si venimos de detalle partido para que restaure la información que ya había
         //var partidoselected = window.sessionStorage.detallepartido;
@@ -19,21 +21,23 @@ function carga(){
             
              //si veníamos de followers cambiamos el titulo
              var playerfollowed=idplayerfollow.split(separador);
-             document.getElementById("titulo").innerHTML="Partidos publicados de "+playerfollowed[1];
+             document.getElementById("titulo").innerHTML="Partidos publicados de "+playerfollowed[1]+" <img id='cargando' class='imgIcono4' style='float:right;cursor:pointer' src='./images/loading.gif' >";
          }else{
             window.sessionStorage.followpartidosFromIndex=true;
             console.log(window.sessionStorage.followpartidosFromIndex);
          }
-
+         //habilitarIconoCargando("cargando");
          cargalocal();
     }else if (idplayerfollow!=null){
         //venimos de followers
         
         var playerfollowed=idplayerfollow.split(separador);
         console.log("venimos de followers idplayerfollow="+idplayerfollow);
-        document.getElementById("titulo").innerHTML="Partidos publicados de "+playerfollowed[1];
+        document.getElementById("titulo").innerHTML="Partidos publicados de "+playerfollowed[1]+" <img id='cargando' class='imgIcono4' style='float:right;cursor:pointer' src='./images/loading.gif' >";
         max=10000000; // no ponemos límite a los partidos a visualizar
-        cargaFirebase(max, playerfollowed[0]);
+        //habilitarIconoCargando("cargando");
+        superfollower=playerfollowed[2];
+        cargaFirebase(max, playerfollowed[0], superfollower);
         
     }else{
         //si no hay nada cargado se trae la info de la bd en el cloud
@@ -42,10 +46,11 @@ function carga(){
         window.sessionStorage.followpartidosFromIndex=true;
         console.log(window.sessionStorage.followpartidosFromIndex);
         console.log("venimos de index carga firebase");
-        
-        cargaFirebase(max, null); //cargamos máximo 25 últimos partidos
+        //habilitarIconoCargando("cargando");
+        cargaFirebase(max, null,null); //cargamos máximo 25 últimos partidos
         //mostrarCabeceras();
     }
+    
 }
 
 
@@ -74,7 +79,7 @@ function cargalocal(playerselected){
 }
 
 
-function cargaFirebase(max, idplayerfollow){
+function cargaFirebase(max, idplayerfollow, superfollower){
 
 
    var claveuser=window.localStorage.clave;
@@ -93,20 +98,87 @@ function cargaFirebase(max, idplayerfollow){
         label="idusuario";
         value=claveuser;
    }
-   
-   cargaPartidosPlayersSeguidosByAttributesFB(label, value,max); 
+   if (superfollower!=null && superfollower==1){
+        //es un superfollower cargamos todos los partidos del usuario
+        label="player";
+        value=idplayerfollow;
+        cargaPartidosPorAtributoFB(label, value)
+   }else{
+       //cargarmos los partidos publicos
+        cargaPartidosPlayersSeguidosByAttributesFB(label, value,max); 
+   }
 
 }
 
 function filtrarInformacion(arr){
-        
-    printInformacion(arr, separador);
-    
+    if (arraypartidossuperfollowed!=null){
+        console.log("es un superfollower arr de partidos publicos total="+arr.length);
+        //el usuario es superfollower
+        genarraysuperfollower(arr);
+    }else{
+        printInformacion(arr, separador);
+    }    
+}
+
+function genarraysuperfollower(arraypublicos){
+    console.log("genarraysuperfollower");
+
+    var tmpFound=false;
+    //recorremos la lista de todos los partidos
+    for (var i=0;i<arraypartidossuperfollowed.length;i++){
+        tmpFound=false;
+       
+        for (var j=0;j<arraypublicos.length && !tmpFound;j++){
+            //console.log(arraypartidossuperfollowed[i].idpartido+" == "+arraypublicos[j].idpartido);
+            if (arraypartidossuperfollowed[i].idpartido==arraypublicos[j].idpartido){
+                //console.log("machacamos posición");
+                //es un partido publicado
+                //machacamos la posición
+                arraypartidossuperfollowed[i]=arraypublicos[j];
+                //salimos del bucle
+                tmpFound=true;
+                break;
+            }
+        }
+        if (!tmpFound){
+            //console.log("renombramos variables");
+            //idpartido, idseguidosregistro ,like
+            arraypartidossuperfollowed[i].like=-1;
+            arraypartidossuperfollowed[i].idseguidosregistro="";            
+            //en caso que esté publicado necesitamos el campo registro con los datos del partido;
+            arraypartidossuperfollowed[i].registropartido=arraypartidossuperfollowed[i].registro;
+        }
+        //console.log(i+"->"+arraypartidossuperfollowed[i]);
+    }
+    //modificamos el array de memoria por el nuevo array calculado
+    window.localStorage.seguidospartido=JSON.stringify(arraypartidossuperfollowed);
+    printInformacion(arraypartidossuperfollowed,separador)
 }
 
 
-function printInformacion(arr, separador){
+
+function retCargaPartidosPorAtributo(arrpartidos){
+    var max=10000000;
+    console.log("es un superfollower arr de partidos del usuario total="+arrpartidos.length);
     
+    var idplayerfollow=window.sessionStorage.idfollowed;          
+    var playerfollowed=idplayerfollow.split(separador);
+    
+    playerfollowed[0]
+    //si estamos aqui es porque el usuario es un superfollower
+    arraypartidossuperfollowed=arrpartidos;
+    var claveuser=window.localStorage.clave;
+
+    var label="idplayeridusuario";
+    var value=playerfollowed[0]+claveuser;
+
+    //console.log("value->"+value);
+    //llamamos a los partidos publicados
+    cargaPartidosPlayersSeguidosByAttributesFB(label, value,max); 
+}
+
+function printInformacion(arr, separador){
+    inhabilitarIconoCargando("cargando");
     var datosLinea="";
     if (arr && arr.length > 0){
         
@@ -117,6 +189,13 @@ function printInformacion(arr, separador){
             agregarFila(datosLinea, i,  arr[i].idpartido ,arr[i].idseguidosregistro, arr[i].like);
             //alert(datosLinea);
         }
+        if (max>25){
+            //si max es mayor que 25 es que no estamos en el index 
+            var idplayerfollow=window.sessionStorage.idfollowed;
+            //seguidostablepartidos
+            agregarFilaEstadisticas(idplayerfollow, "seguidostablepartidos");
+        }
+        
     }else{
         mostrarToast("no hay partidos registrados...",3000);
     }
@@ -135,8 +214,14 @@ function getFollowedPartidoSelected(lineselected, idpartido){
     }else{
         //console.log("carga normal");
         window.location.href='./detallepartido.html';
-    }
-    
+    }    
+}
+
+function gotoestadisticasgenerales(idplayer){
+    window.sessionStorage.seguidosidpartido = 0;//informamos estas variables sólo para que el retorno haga una carga local
+    //window.sessionStorage.detallepartido=0; 
+    //window.sessionStorage.detalleidpartido=0; 
+    window.location.href='./detalleestadisticasgenerales.html';
 }
 
 function putLikeFollowedPartidoSelected(lineselected, idpartido, idseguidosregistro){
@@ -183,8 +268,10 @@ function agregarFila(datosLines, id, idpartido, idseguidosregistro ,like){
     linea+="<font style='font-weight: bold;font-size:20px;color: #41cbfe;'>"+nombre+"</font>&nbsp;"+categoria+"</td>";
     if (like==0){
         linea+="<td><a id ='link-"+id+"' href=\"javascript:putLikeFollowedPartidoSelected("+id+",'"+idpartido+"','"+idseguidosregistro+"');\"><img id='like-"+id+"' class='imgIcono4' src='./images/like-off.png'></a></td>";
-    }else{
+    }else if(like>0){
         linea+="<td><img id='like-"+id+"' class='imgIcono4' src='./images/like-on.png'></td>";
+    }else{
+        linea+="<td>&nbsp;</td>";
     }
     
     linea+="</tr></table>";

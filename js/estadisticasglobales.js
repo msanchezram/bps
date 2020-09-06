@@ -1,11 +1,17 @@
 function carga(){
     //cargalocal()
-    if (window.sessionStorage.detallepartido!=null){        
+    //console.log("detallepartido->"+window.sessionStorage.detallepartido);
+    //borramos variable por limpieza
+    window.localStorage.removeItem("veropcionfollowersplayer");
+    window.localStorage.removeItem("verLikesIdPartido");
+    if (window.sessionStorage.detallepartido!=null){    
+        console.log("carga local");
         //miramos si venimos de detalle partido para que restaure la información que ya había
         var partidoselected = window.sessionStorage.detallepartido;
         window.sessionStorage.removeItem("detallepartido");
          //si no hacemos la carga local
          //cargalocal(partidoselected);
+         //console.log("cargalocal");
          cargalocal();
     }else{
        //si no hay nada cargado se trae la info de la bd en el cloud
@@ -80,12 +86,9 @@ function cargaFirebase(){
 function onchangeplayer(){
     var idplayer = document.getElementById("fplayer").value;
     
-    //limpiar tabla de resultados
+    //limpiar tabla de resultados util.js
     limpiarTablaResultados("tablepartidos");
-    //for(var i=document.getElementById("tablepartidos").rows.length;i>0;i--) {
-    //    document.getElementById("tablepartidos").deleteRow(i-1);
-    //}
-    //console.log(idplayer);
+
     if (idplayer == "0"){
         //cargar todos los partidos
         var email = window.localStorage.mail;
@@ -97,6 +100,9 @@ function onchangeplayer(){
 }
 
 function retCargaPartidosPorAtributo(arrpartidos){
+    //Volvemos a limpiar antes de volver a cargar
+    limpiarTablaResultados("tablepartidos");
+
     window.localStorage.playerpartidos=JSON.stringify(arrpartidos);
     var idplayer = document.getElementById("fplayer").value;
     var all=false;
@@ -123,7 +129,7 @@ function cargaselectplayer(players){
         }
 
         for(i=0;i<players.length;i++){        
-            //sólo podemos crear partido con los players activos
+            
             x = document.getElementById("fplayer");
             option = document.createElement("option");
             text=players[i].nombre+" - "+ players[i].categoria + "- "+ players[i].equipo + " - "+ players[i].temporada;            
@@ -150,13 +156,18 @@ function printInformacion(arr, separador, all){
     //var arr = arr.split("#");
     var datosLinea="";
     if (arr && arr.length > 0){
+        var tmpIdPlayer="";
         
         for (i = 0; i < arr.length; i++) {
             //console.log( arr[i]);
+            tmpIdPlayer=arr[i].player;
             datosLinea = arr[i].registro.split(separador);
             //alert(datosLinea);
             agregarFila(datosLinea, i, all, arr[i].idpartido, arr[i].publico, arr[i].likes );
             //alert(datosLinea);
+        }
+        if(!all){
+            agregarFilaEstadisticas(tmpIdPlayer);
         }
     }else{
         mostrarToast("no hay partidos registrados...",3000);
@@ -171,7 +182,24 @@ function getPartidoSelected(lineselected, idpartido){
     window.sessionStorage.detalleidpartido=idpartido;
     location.href='./detallepartido.html';
 }
+function gotoestadisticasgenerales(idplayer){
+    window.localStorage.playerselected=document.getElementById("fplayer").value;
+    window.sessionStorage.detallepartido=0; //informamos estas variables sólo para que el retorno haga una carga local
+    window.sessionStorage.detalleidpartido=0; 
+    window.location.href='./detalleestadisticasgenerales.html';
+}
 
+function agregarFilaEstadisticas(idplayer){
+    var linea="<td>";
+    linea+="<a href=\"javascript:gotoestadisticasgenerales('"+idplayer+"')\">";
+    linea+="<table class='table_test'>";
+    linea+="<tr><td style='text-align: center;'>'<font style='color:#41cbfe;'>Estadísticas generales</font></td></tr>";
+    linea+="</table>";
+    linea+="</a>";
+    linea+="</td>";
+    var row = document.getElementById("tablepartidos").insertRow(0);
+    row.innerHTML = linea; 
+}
 
 function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     //console.log(datosLines);
@@ -189,7 +217,7 @@ function agregarFila(datosLines, id, all, idpartido, publicado, likes){
 
  
     linea="<td>";
-    linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
+    //linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
     linea+="<table class='table_test'>";
     //linea+="<tr><td  colspan='8' width='91%'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
     linea+="<tr><td  colspan='9'<font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
@@ -201,7 +229,7 @@ function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     }    
     //linea+="<span style='float:right;cursor:pointer'>";
     if (likes > 0){
-        linea+="<font style='color:#41cbfe;font-size:14px;font-weight: bold;float:right;cursor:pointer'>"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;float:right;cursor:pointer' src='./images/like-on.png'/></font>";
+        linea+="<font style='color:#41cbfe;font-size:14px;font-weight: bold;float:right;cursor:pointer'><a href=\"javascript:verlikes("+id+",'"+idpartido+"')\">"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;float:right;cursor:pointer' src='./images/like-on.png'/></a></font>";
     }
     if (publicado==1){
         linea+="<img id='cr' class='imgIcono4' style='float:right;cursor:pointer' src='./images/publicado.png'>";
@@ -213,6 +241,9 @@ function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     //}
     //linea+="</span>";
     linea+="</td></tr>";
+    linea+="</table>";
+    linea+="<a href=\"javascript:getPartidoSelected("+id+",'"+idpartido+"');\">";
+    linea+="<table class='table_test'>";
     if (all){
         //linea+="<tr><td colspan='9'><font style='font-size:16px;color:#FFFFFF'>"+nombre+" - "+categoria+"</font></td></tr>";
         linea+="<tr><td colspan='9'><font style='font-size:16px;color:#FFFFFF'>"+nombre+" - "+categoria+"</font></td></tr>";
@@ -262,6 +293,17 @@ function agregarFilaOld(datosLines, id){
     row.innerHTML = lineatabla;   
 }
 */
+function verlikes(lineselected,idpartido){
+    //dejamos estos datos para que luego nos haga la cargalocal
+    window.localStorage.playerselected=document.getElementById("fplayer").value;
+    window.sessionStorage.detallepartido=lineselected;
+    window.sessionStorage.detalleidpartido=idpartido;
+    
+    //indicamos que venimos de Likes
+    window.localStorage.veropcionfollowersplayer="L";
+    window.localStorage.verLikesIdPartido=idpartido;
+    location.href='./verfollowers.html';
+}
 function crearCelda(variable, id){
     return "<td><a href='javascript:getPartidoSelected("+id+")'>"+variable+"</a></td>";
 }
