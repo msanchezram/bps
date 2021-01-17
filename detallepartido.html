@@ -215,16 +215,22 @@
 
     <tr><td colspan="8">&nbsp;</td></tr>
     <tr id="tr-pub" style="visibility: hidden;">
-      <td colspan="4" style="width: 50%;" id="tdborrar">
-      <input type="button" id="myBtnFin" class="buttoncrono" value="BORRAR" />
+      <td colspan="3" style="width: 33%;" id="tdborrar">
+        <input type="button" id="myBtnFin" class="buttoncrono" value="BORRAR" />
       </td>
-      <td colspan="4" style="width: 50%;" id="tdpublicar">
+      <td colspan="3" style="width: 33%;" id="tdpublicar">
         <input type="button" id="myBtnPub" class="buttoncrono" onclick="publicarPartido()"  value="PUBLICAR" />
       </td>
+      <td colspan="2" style="width: 33%;" id="tdmodificar">
+        <input type="button" id="myBtnMod" class="buttoncrono" onclick="modificarDatosPartido()"  value="MODIFICAR" />
+      </td>
     </tr>
-    <tr id="tr-del"  style="visibility: hidden;">
-      <td colspan="8"  id="tdborrar">
+    <tr id="tr-del" style="visibility: hidden;">
+      <td colspan="4" style="width: 50%;"  id="tdborrar">
         <input type="button" id="myBtnFin2" class="buttoncrono" value="BORRAR" />
+      </td>
+      <td colspan="4" style="width: 50%;" id="tdmodificar">
+        <input type="button" id="myBtnMod" class="buttoncrono" onclick="modificarDatosPartido()"  value="MODIFICAR" />
       </td>
     </tr>
   </tr>
