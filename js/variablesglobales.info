@@ -18,6 +18,11 @@ window.sessionStorage.rival= //al crear el partido guardamos el rival
 window.sessionStorage.complejidad //al crear el partido guardamos el select de la complejidad
 window.sessionStorage.idplayer //al crear el partido guardamos el idplayer, para luego guardarlo en BD
 
+window.sessionStorage.puntuacionTeam //cuando modificamos un partido debemos guardar el resultado final del partido que modificamos
+window.sessionStorage.puntuacionRival //cuando modificamos un partido debemos guardar el resultado final del partido que modificamos
+window.sessionStorage.modificarpartido //1 significa que estamos modificando el partido
+window.sessionStorage.modificarpartidoPublicado //1 significa que el partido que estamos modificando está publicado
+
 //estadisticasglobales
 window.localStorage.playerselected //el player que tenemos seleccionado cuando pulsamos ver datos de un partido, esto nos servirá para luego restaurar el select
 window.localStorage.playerpartidos //lista de partidos del player que estamos gestionando

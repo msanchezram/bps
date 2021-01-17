@@ -7,7 +7,7 @@ function carga(){
     if (window.sessionStorage.detallepartido!=null){    
         console.log("carga local");
         //miramos si venimos de detalle partido para que restaure la información que ya había
-        var partidoselected = window.sessionStorage.detallepartido;
+        //var partidoselected = window.sessionStorage.detallepartido;
         window.sessionStorage.removeItem("detallepartido");
          //si no hacemos la carga local
          //cargalocal(partidoselected);
@@ -121,23 +121,37 @@ function cargaselectplayer(players){
     if (players.length>0){
         var x = document.getElementById("fplayer");
         var option = document.createElement("option");
-        
+        var listaInactivos=[];
+
         if (players.length>1){
             option.text = "Selecciona jugador/a"; //primero blanco para que no lo cargue todo
             option.value="";
             x.add(option);        
         }
 
-        for(i=0;i<players.length;i++){        
+        //ponemos a principio de lista los inactivos
+        for(var i=0;i<players.length;i++){        
             
-            x = document.getElementById("fplayer");
+            //x = document.getElementById("fplayer");
             option = document.createElement("option");
             text=players[i].nombre+" - "+ players[i].categoria + "- "+ players[i].equipo + " - "+ players[i].temporada;            
             option.text = text;
             option.value=players[i].idplayer;
-            x.add(option);
-            //count++;               
+            //console.log(text +" activo="+players[i].activo);
+            if (players[i].activo==1){
+                //si es activo a principio de lista
+                //option.style.color='#41cbfe';
+                x.add(option);
+            }else{
+                option.style.color='#808080';
+                listaInactivos.push(option);
+            }
         }
+        //insertamos en la select los inactivos
+        for (var j=0;j<listaInactivos.length;j++){
+            x.add(listaInactivos[j]);
+        }
+
         if (players.length>1){
             x = document.getElementById("fplayer");
             option = document.createElement("option");
@@ -221,14 +235,14 @@ function agregarFila(datosLines, id, all, idpartido, publicado, likes){
     linea+="<table class='table_test'>";
     //linea+="<tr><td  colspan='8' width='91%'><font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
     linea+="<tr><td  colspan='9'<font style='font-weight: bold;font-size:20px;color:#41cbfe;'>"+rival+"</font>";
-    if(!(puntuacionEquipo == 0 && puntuacionRival ==0)){            
+    if(!(Number(puntuacionEquipo) == 0 && Number(puntuacionRival) ==0)){            
         linea+="&nbsp;<font style='font-size:18px;'>"+puntuacionEquipo+"-"+puntuacionRival+"</font>";        
     }        
-    if (puntuacionEquipo > puntuacionRival){ //en caso que haya un resultado se muestra
+    if (Number(puntuacionEquipo) > Number(puntuacionRival)){ //en caso que haya un resultado se muestra
         linea+="&nbsp;<img id='cr' class='imgIcono4' src='./images/win.png'>";
     }    
     //linea+="<span style='float:right;cursor:pointer'>";
-    if (likes > 0){
+    if (Number(likes) > 0){
         linea+="<font style='color:#41cbfe;font-size:14px;font-weight: bold;float:right;cursor:pointer'><a href=\"javascript:verlikes("+id+",'"+idpartido+"')\">"+likes+"<img id='cr' class='imgIcono4' style='vertical-align:bottom;float:right;cursor:pointer' src='./images/like-on.png'/></a></font>";
     }
     if (publicado==1){

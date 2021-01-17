@@ -803,3 +803,78 @@ function getPartidosByPlayerFB(idplayer, idusuario){
 
 }
 */
+
+function updateMatchFB(idPartido, registroPartido){
+    if (!firebase.apps.length) {                
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    var matchsref = firebase.database().ref("registros/"+idPartido);
+    console.log("modificamos datos del partido");
+
+    matchsref.update ({        
+        registro: registroPartido
+    });
+    console.log("partido modificado");
+}
+
+function updateSeguidosRegistrosFB(idPartido, seguidosRegistroPartido){
+    if (!firebase.apps.length) {                
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    var seguidosRegistrosref = firebase.database().ref("seguidosregistros"); //+idPartido);
+
+    var arrseguidosRegistros = [];
+    var seguidosRegistro;
+    seguidosRegistrosref.orderByChild("idpartido").equalTo(idPartido).on("child_added", function(data) {
+        //console.log("seguidosRegistros->"+data.key);
+
+        
+        seguidosRegistro = seguidosregistrosDTO(data);
+        arrseguidosRegistros.push(seguidosRegistro);                
+
+    });
+
+    seguidosRegistrosref.once("value", function(snap2) {
+        //console.log("seguidosRegistrosref.once");
+        for (var i=0;i<arrseguidosRegistros.length;i++){
+            var seguidosRegistrosKeyref = firebase.database().ref("seguidosregistros/"+arrseguidosRegistros[i].idseguidosregistro);
+
+            seguidosRegistrosKeyref.update({
+                //seguidosRegistrosref.update({
+                registropartido: seguidosRegistroPartido
+            });
+
+            seguidosRegistrosKeyref.once("value",function(snap3){
+                //console.log("seguidosRegistrosKeyref->"+arrseguidosRegistros[i].idseguidosregistro+" modificado");
+            });
+
+        }
+
+        UpdateSeguidosRegistrosFBRetorno();
+    }); 
+   
+}
+
+/*
+ var players = firebase.database().ref("jugadores");
+    var jugador;
+
+players.orderByChild("idusuario").equalTo(idusuario).on("child_added", function(data2) {
+        jugador=playerDTO(data2);            
+        arrplayers.push(jugador);
+    });
+    players.once("value",function(snap2){
+        window.localStorage.players=JSON.stringify(arrplayers);  
+        if (retorno!=null){
+            if (retorno=="./players.html"){
+                cargarTablaPlayers(arrplayers);  
+            }else if (retorno=="./serarchfollower.html"){
+                mostrarToast(arrplayers.length+" jugadores/as cargados",3000);
+                activarBotonBuscar();
+            }
+        }                  
+    });
+
+*/

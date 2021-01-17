@@ -4,6 +4,24 @@ var val2=0;
 var val3=0;
 var val4=0;
 
+var myElement = document.getElementById('mytouch');
+
+// create a simple instance
+// by default, it only adds horizontal recognizers
+var mc = new Hammer(mytouch);
+
+// listen to events...
+mc.on("panleft panright tap press", function(ev) {
+    //myElement.textContent = ev.type +" gesture detected.";
+    //alert(ev.type);
+    if(ev.type=="panright"){
+      //window.parent.cambiarlink(2);
+      //window.parent.$('#atb').click();
+      window.sessionStorage.setItem("pantalla",3);
+      top.location.href = 'plantillapartido.html';
+    }
+});
+
 function carga(){
     //cambiar datos del jugador/a
     //alert("carga");

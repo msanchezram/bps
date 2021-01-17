@@ -6,8 +6,26 @@ function carga(){
         
         document.getElementById("titulo").innerHTML="Modificar datos del partido";
         players= JSON.parse(window.localStorage.players);
+        //console.log(players);
+        //console.log(window.sessionStorage.idplayer);
         cargaselectplayer(players);
-        document.getElementById("fplayer").value=window.sessionStorage.posplayer;
+        if (window.sessionStorage.posplayer!=null){
+            
+            //si entra aquí es porque está modificando los datos del partido en tiempo real
+            document.getElementById("fplayer").value=window.sessionStorage.posplayer;
+        }else{
+            
+            //si entra aquí es porque viene de una modificación de datos de partido ya guardado
+            var posicionPlayer=getPosicionListaPlayers(players, window.sessionStorage.idplayer);
+            //var lstplayers=[players[posicionPlayer]];
+            //console.log(lstplayers);
+            //cargaselectplayer(lstplayers);
+            console.log(posicionPlayer);
+            document.getElementById("fplayer").value=posicionPlayer;
+            document.getElementById("fplayer").disabled=true;
+        }
+
+        
         //document.getElementById("fteam").value=window.sessionStorage.team;
         //document.getElementById("fname").value=window.sessionStorage.nombre ;
         //document.getElementById("lcategoria").value=window.sessionStorage.categoria;
@@ -50,11 +68,20 @@ function carga(){
     }
 }
 
+function getPosicionListaPlayers(players, idPlayer){
+    for(var i=0;i<players.length;i++){
+        if (players[i].idplayer==idPlayer){
+            return i;
+        }
+    }
+    return null;
+}
+
 function cargaselectplayer(players){
 
     var text="";
     var count=0;
-    for(i=0;i<players.length;i++){
+    for(var i=0;i<players.length;i++){
         if (players[i].activo==1){
             //sólo podemos crear partido con los players activos
             text=players[i].nombre+" - "+ players[i].categoria + "- "+ players[i].equipo + " - "+ players[i].temporada;

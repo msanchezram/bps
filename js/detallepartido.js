@@ -2,6 +2,7 @@ var playerdata;
 var datosLineaFollowed;
 var datosLinea
 var publicado;
+var separador=";"
 
 //charts
 var enti=0,enta=0, t1i=0,t1a=0, t2i=0,t2a=0, t3i=0,t3a=0;
@@ -12,9 +13,14 @@ function carga(){
     var lineselected;
 
     datosLinea="";
-    var separador=";"
+    
     playerdata=0;
     
+    //borramos datos al carga por si el usuario pulsa atrás en el botón
+    window.sessionStorage.removeItem("puntuacionTeam");
+    window.sessionStorage.removeItem("puntuacionRival ");
+    window.sessionStorage.removeItem("modificarpartido");
+    window.sessionStorage.removeItem("modificarpartidoPublicado");
 
     //console.log("window.sessionStorage.detallepartido ->"+window.sessionStorage.detallepartido);
     //console.log("window.sessionStorage.seguidosidpartido ->"+window.sessionStorage.seguidosidpartido);
@@ -42,6 +48,7 @@ function carga(){
             
             document.getElementById("tr-pub").style.display = "none";
             document.getElementById("tr-del").style.visibility= "visible";
+           
         }else{
             document.getElementById("tr-del").style.display = "none";
             document.getElementById("tr-pub").style.visibility= "visible";
@@ -399,4 +406,77 @@ function publicarPartido(){
     }
     
     
+}
+
+function modificarDatosPartido(){
+    //funcion de utils.js
+    var isActivoPlayer = isActivePlayer(window.localStorage.playerselected);
+    //console.log(window.localStorage.playerselected);
+    if (isActivoPlayer){
+        goToModificarDatosPartido();
+    }else{
+        mostrarToast("El jugador/a debe estar activo :(",3000)
+    }
+    
+}
+
+function goToModificarDatosPartido(){
+
+    var arr= JSON.parse(window.localStorage.playerpartidos);
+    var lineselected = window.sessionStorage.detallepartido;
+    datosLinea = arr[lineselected].registro.split(separador);
+    //console.log(datosLinea);
+
+    generarBorrarDatosSesion(datosLinea, arr[lineselected].player, 1); //util.js generar datos sesion
+   /*
+    window.sessionStorage.team = datosLinea[0];
+    window.sessionStorage.nombre = datosLinea[1];
+    window.sessionStorage.categoria =  datosLinea[2];
+    
+    window.sessionStorage.idplayer = arr[lineselected].player;
+    window.sessionStorage.fecha=datosLinea[3];
+    window.sessionStorage.rival=datosLinea[4];
+    window.sessionStorage.complejidad=datosLinea[5];
+    */
+    /*
+    console.log(window.sessionStorage.team);
+    console.log(window.sessionStorage.nombre);
+    console.log(window.sessionStorage.categoria);    
+    console.log(window.sessionStorage.fecha);
+    console.log(window.sessionStorage.rival);
+    console.log(window.sessionStorage.complejidad);
+    console.log("idplayer ->"+ window.sessionStorage.idplayer);
+    */
+    /*
+    var tiposDatos =["t1in","t1","t2in","t2","t3in","t3","tein","te","frea","frec","asi","tap","reo","red","bap","bar","tapc"];
+    var periodos = [1,2,3,4];
+    //var periodos =[1,2,3,4];
+    //("t"+tipoTiro+"inp"+periodo)
+    var posDato=6;
+    for (var i=0;i<tiposDatos.length;i++){
+        for (var j=0;j<periodos.length;j++){ //los 4 periodos
+            generarDatosSesion(tiposDatos[i],periodos[j],datosLinea[posDato]);
+            posDato++;
+        }
+    }
+    //console.log(posDato);
+    posDato+=5; //nos saltamos la posición de la valoración
+    window.sessionStorage.setItem("puntuacionTeam",datosLinea[posDato]);
+    posDato++;
+    window.sessionStorage.setItem("puntuacionRival",datosLinea[posDato]);
+    window.sessionStorage.setItem("modificarpartido",1);
+    window.sessionStorage.setItem("modificarpartidoPublicado",publicado);
+
+    */
+    
+    //console.log(window.sessionStorage.getItem("puntuacionTeam"));
+    //console.log(window.sessionStorage.getItem("puntuacionRival"));
+    //vamos a la pantalla de partido
+    window.location.href = './plantillapartido.html';
+}
+
+function generarDatosSesion(tipodato, periodo, dato){
+    var nombreVariable = tipodato+"p"+periodo;
+    window.sessionStorage.setItem(nombreVariable,dato);
+    //console.log(nombreVariable+"->"+window.sessionStorage.getItem(nombreVariable));
 }

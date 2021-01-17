@@ -1,3 +1,23 @@
+//window.parent;
+
+var myElement = document.getElementById('mytouch');
+
+// create a simple instance
+// by default, it only adds horizontal recognizers
+var mc = new Hammer(mytouch);
+
+// listen to events...
+mc.on("panleft panright tap press", function(ev) {
+    //myElement.textContent = ev.type +" gesture detected.";
+    //alert(ev.type);
+    if(ev.type=="panleft"){
+      //window.parent.cambiarlink(2);
+      //window.parent.$('#atb').click();
+      window.sessionStorage.setItem("pantalla",2);
+      top.location.href = 'plantillapartido.html';
+    }
+});
+
 function cargaCrono(){
     if (!sessionStorage.periodo){
         sessionStorage.periodo = 0;
@@ -44,8 +64,16 @@ function finPartido(guardar){
 
     }else{
       //alert(' no guardo');
-      window.sessionStorage.clear();
-      window.top.location.href = "./index.html";
+
+      if (window.sessionStorage.modificarpartido!=null &&
+          window.sessionStorage.modificarpartido==1){
+            salirModificacionDatosPartido();
+      }else{
+        window.sessionStorage.clear();
+        window.top.location.href = "./index.html";
+      }
+
+      
     }
     //alert(localStorage.estadisticasglobales);
 }
@@ -65,6 +93,18 @@ btn.onclick = function() {
   modal.style.display = "block";
   window.document.getElementById("lteam").innerHTML=window.sessionStorage.team;
   window.document.getElementById("lrival").innerHTML=window.sessionStorage.rival;
+  document.getElementById("pub-partido").style.visibility= "visible";
+
+  if (window.sessionStorage.modificarpartido!=null &&
+      window.sessionStorage.modificarpartido==1){
+    //si existe este valor, es porque venimos de modificar los datos del partido
+    //y debemos recuperar la puntuación del partido    
+    window.document.getElementById("iteam").value= window.sessionStorage.puntuacionTeam;
+    window.document.getElementById("irival").value=window.sessionStorage.puntuacionRival;
+    document.getElementById("pub-partido").style.display = "none";
+    document.getElementById("msgModal").innerHTML="Estás seguro que quieres guardar los datos del partido?<br>Por favor introduce el resultado final";
+  }
+
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -226,19 +266,57 @@ function grabarDatosBaseDatosCloud(){
   genRegistro+=iteam+";"+irival;
 
   //console.log("3 "+genRegistro);
-  mostrarToast("registrando los datos!!",1000); 
+  mostrarToast("registrando los datos!!",3000); 
   //saveMatchFB(email,idplayer,genRegistro);
-  var res = saveMatchFB(email,idplayer,genRegistro, publico);
+  if (window.sessionStorage.modificarpartido!=null &&
+      window.sessionStorage.modificarpartido==1){
+      //entra si estamos modificando los datos del partido
+      modificarDatosPartido(genRegistro)
+    }else{
+      //es un partido nuevo
+      var res = saveMatchFB(email,idplayer,genRegistro, publico);
 
-  //console.log("Idplayer "+idplayer);
-  //console.log("Key partido "+res);
-  //console.log("genregistro "+genRegistro);
-  if (publico==1){
-    processMatchFollowedByPlayerFB(idplayer,res,genRegistro,"./index.html",true);
-  }else{
-    window.top.location.href="./index.html";
-  }
-  
+      //console.log("Idplayer "+idplayer);
+      //console.log("Key partido "+res);
+      //console.log("genregistro "+genRegistro);
+      if (publico==1){
+        processMatchFollowedByPlayerFB(idplayer,res,genRegistro,"./index.html",true);
+      }else{
+        window.top.location.href="./index.html";
+      }
+    }  
+
   //console.log("fin grabarDatosBaseDatosCloud");
 
+}
+
+function modificarDatosPartido(registroPartido){
+  //console.log("Inicio modificarDatosPartido");
+  var idPartidoModif = window.sessionStorage.detalleidpartido;
+  var partidoModifPublico=window.sessionStorage.modificarpartidoPublicado;
+
+  //console.log("update "+idPartidoModif+", publico ="+partidoModifPublico);
+  updateMatchFB(idPartidoModif, registroPartido);
+
+  if (partidoModifPublico==1){
+    //console.log("Inicio updateSeguidosRegistrosFB");
+    updateSeguidosRegistrosFB(idPartidoModif, registroPartido);
+  }
+  //console.log("Fin modificarDatosPartido");
+  
+}
+
+function UpdateSeguidosRegistrosFBRetorno(){
+  //console.log("fin updateSeguidosRegistrosFB");
+  salirModificacionDatosPartido();
+}
+
+function salirModificacionDatosPartido(){
+  //debemos borrar todo lo que hemos generado
+  generarBorrarDatosSesion(null, null, 0); // util.js borrar datos sesion
+  window.sessionStorage.removeItem("detalleidpartido"); //borramos esta variable para que recargue la página
+  window.sessionStorage.removeItem("periodo"); //borramos la variable de sesion periodo
+  window.sessionStorage.removeItem("modificadatospartido");
+  
+  window.top.location.href="./estadisticasglobales.html";
 }

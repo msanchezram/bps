@@ -7,32 +7,31 @@ var mc = new Hammer(mytouch);
 // listen to events...
 mc.on("panleft panright tap press", function(ev) {
     //myElement.textContent = ev.type +" gesture detected.";
-    console.log(ev.type + ", estoy en pantalla " + window.sessionStorage.pantalla);
+    //alert(ev.type + ", estoy en pantalla " + window.sessionStorage.pantalla);
     if(ev.type=="panleft"){
       //window.parent.cambiarlink(2);
       //window.parent.$('#atb').click();
 
         //switch (Number(window.sessionStorage.pantalla)){       
         //    case 2:  //estoy en pantalla
-                //alert(1);
-                window.sessionStorage.setItem("pantalla",3);
-               
+        //        alert(1);
+        //        window.sessionStorage.setItem("pantalla",3);        
         //        break;
             //case 3: cambiarlink(3);break;
         //    default: //si no estoy en pantalla2
-                //alert(2);
-         //       window.sessionStorage.setItem("pantalla",4);
+        //        alert(2);
+                window.sessionStorage.setItem("pantalla",4);
         //}      
         top.location.href = 'plantillapartido.html';
     }
     if(ev.type=="panright"){
         //switch (Number(window.sessionStorage.pantalla)){       
-        //    case 2:  //estoy en pantalla
-                window.sessionStorage.setItem("pantalla",1);
-        //        break;
+            //case 2:  //estoy en pantalla
+            //    window.sessionStorage.setItem("pantalla",1);
+            //    break;
             //case 3: cambiarlink(3);break;
-        //    default: //si no estoy en pantalla2
-        //        window.sessionStorage.setItem("pantalla",2);
+            //default: //si no estoy en pantalla2
+                window.sessionStorage.setItem("pantalla",2);
         //}        
         top.location.href = 'plantillapartido.html';
     }

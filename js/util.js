@@ -288,3 +288,86 @@ function getNumeroDecimal(numero, precision){
     }
     return numero;
 }
+
+//Funcion que nos dice si el player es activo
+function isActivePlayer(idPlayer){
+    var players = window.localStorage.players;
+    players= JSON.parse(players);
+
+    for (var i=0;i<players.length;i++){
+        console.log(players[i].idplayer+"=="+idPlayer+" activo ="+players[i].activo);
+        if (players[i].idplayer==idPlayer &&
+            players[i].activo==1){
+            return true;
+        }
+    }
+    return false;
+}
+
+function generarBorrarDatosSesion(datosLinea, idPlayer, tipo){
+
+    var tiposDatos =["t1in","t1","t2in","t2","t3in","t3","tein","te","frea","frec","asi","tap","reo","red","bap","bar","tapc"];
+    var periodos = [1,2,3,4];
+
+    if (tipo==1){
+        //generar datos sesion
+
+        window.sessionStorage.team = datosLinea[0];
+        window.sessionStorage.nombre = datosLinea[1];
+        window.sessionStorage.categoria =  datosLinea[2];
+        
+        window.sessionStorage.idplayer = idPlayer;
+        window.sessionStorage.fecha=datosLinea[3];
+        window.sessionStorage.rival=datosLinea[4];
+        window.sessionStorage.complejidad=datosLinea[5];
+
+        var posDato=6;
+        for (var i=0;i<tiposDatos.length;i++){
+            for (var j=0;j<periodos.length;j++){ //los 4 periodos
+                generarDatosSesion(tiposDatos[i],periodos[j],datosLinea[posDato],1); //crear variable
+                posDato++;
+            }
+        }
+
+        posDato+=5; //nos saltamos la posición de la valoración
+        window.sessionStorage.setItem("puntuacionTeam",datosLinea[posDato]);
+        posDato++;
+        window.sessionStorage.setItem("puntuacionRival",datosLinea[posDato]);
+        window.sessionStorage.setItem("modificarpartido",1);
+        window.sessionStorage.setItem("modificarpartidoPublicado",publicado);
+    }else{
+        //borrar datos sesion
+        window.sessionStorage.removeItem("team");
+        window.sessionStorage.removeItem("nombre");
+        window.sessionStorage.removeItem("categoria");
+        window.sessionStorage.removeItem("idplayer");
+        window.sessionStorage.removeItem("fecha");
+        window.sessionStorage.removeItem("rival");
+        window.sessionStorage.removeItem("complejidad");
+        
+        window.sessionStorage.removeItem("modificarpartido");
+        window.sessionStorage.removeItem("modificarpartidoPublicado");
+        window.sessionStorage.removeItem("puntuacionTeam");
+        window.sessionStorage.removeItem("puntuacionRival");
+        window.sessionStorage.removeItem("pantalla");
+        
+        for (var i=0;i<tiposDatos.length;i++){
+            for (var j=0;j<periodos.length;j++){ //los 4 periodos
+                generarDatosSesion(tiposDatos[i],periodos[j],null,0); //crear variable
+                
+            }
+        }
+    }
+}
+
+function generarDatosSesion(tipodato, periodo, dato, opcion){
+    var nombreVariable = tipodato+"p"+periodo;
+    if (opcion==1){
+        //crear variable
+        window.sessionStorage.setItem(nombreVariable,dato);
+    }else{
+        window.sessionStorage.removeItem(nombreVariable);
+    }
+   
+    //console.log(nombreVariable+"->"+window.sessionStorage.getItem(nombreVariable));
+}
